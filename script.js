@@ -4,7 +4,8 @@ know = {
                 "how are you?" : "Bot: good",
                 "hmm" : "hmmmmmm",
                 "who made hmmbot" : "Bot: techtimefor",
-                "ok" : "Bot: :)"
+                "ok" : "Bot: :)",
+                 "how do i invite hmmbot" : "Bot: Sorry you can't for now",
             };
             function talk() {
                 var user = document.getElementById("userBox").value;
@@ -13,7 +14,7 @@ know = {
                 if (user in know) {
                     document.getElementById("chatLog").innerHTML += know[user]+"<br>";
                 } else {
-                    document.getElementById("chatLog").innerHTML += "Sorry i dont know<br>";
+                    document.getElementById("chatLog").innerHTML += "Bot: Sorry i dont know<br>";
                 }
             }
             
