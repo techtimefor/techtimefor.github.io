@@ -31,14 +31,11 @@
                         <span class="absolute left-0 bottom-0 w-0 h-0.5 bg-gray-300 transition-all duration-300 ease-in-out group-hover:w-full"></span>
                     </button>
                 </li>
-                <li class="relative group">
-                    <button class="relative text-lg font-medium py-2 px-4 transition duration-300 ease-in-out hover:text-gray-300">
-                        More
+                <li>
+                    <button class="relative group text-lg font-medium py-2 px-4 transition duration-300 ease-in-out hover:text-gray-300">
+                        About
                         <span class="absolute left-0 bottom-0 w-0 h-0.5 bg-gray-300 transition-all duration-300 ease-in-out group-hover:w-full"></span>
                     </button>
-                    <ul class="absolute hidden group-hover:block bg-gray-800 text-white mt-2 py-2 rounded shadow-lg">
-                        <li><a href="#about" class="block px-4 py-2 hover:bg-gray-700">About</a></li>
-                    </ul>
                 </li>
             </ul>
             <div class="md:hidden">
@@ -49,22 +46,34 @@
                 </button>
             </div>
         </div>
-        <div id="mobile-menu" class="hidden md:hidden bg-neutral-800 bg-opacity-50 backdrop-blur-md text-white">
-            <a href="/" class="block px-4 py-2 hover:bg-gray-600">Home</a>
-            <a href="#amogos" class="block px-4 py-2 hover:bg-gray-600">AmogOS</a>
-            <a href="/projects" class="block px-4 py-2 hover:bg-gray-600">Projects</a>
-            <a href="/about" class="block px-4 py-2 hover:bg-gray-600">About</a>
+        <div id="mobile-menu" class="hidden md:hidden bg-neutral-800 bg-opacity-50 backdrop-blur-md text-white px-4 py-6 space-y-4">
+            <a href="/" class="block text-lg px-4 py-2 bg-gray-700 rounded-lg hover:bg-gray-600">Home</a>
+            <a href="#amogos" class="block text-lg px-4 py-2 bg-gray-700 rounded-lg hover:bg-gray-600">AmogOS</a>
+            <a href="/projects" class="block text-lg px-4 py-2 bg-gray-700 rounded-lg hover:bg-gray-600">Projects</a>
+            <a href="/about" class="block text-lg px-4 py-2 bg-gray-700 rounded-lg hover:bg-gray-600">About</a>
         </div>
     </nav>
 
-    <div class="container mb-20 mx-auto px-4 py-12">
+    <div class="container mt-24 mb-20 mx-auto px-4 py-12">
         <h2 class="text-3xl font-bold text-center mb-4 transform transition duration-500 ease-in-out hover:scale-105 hover:blur-none blur-md opacity-0 animate-fade-in">Downloads</h2>
         <p class="text-center mb-8 transform transition duration-500 ease-in-out hover:scale-105 hover:blur-none blur-md opacity-0 animate-fade-in">Available AmogOS builds</p>
+
+        <div class="rounded-lg overflow-hidden shadow-lg mb-8">
+            <div class="relative h-64">
+                <div class="absolute inset-0 flex items-center justify-center">
+                    <img src="https://media.discordapp.net/attachments/1123074177356791909/1322052317654290513/Notes_241227_040324_235.jpg?ex=67892deb&is=6787dc6b&hm=bac56740f388b7ed8f9b7b8965a69404094afdc90dd18f70d1cc166d32f55f57&=&format=webp&width=1048&height=662" class="w-full h-full object-cover">
+                </div>
+                <div class="absolute inset-0 flex items-center justify-center">
+                    <img src="https://media.discordapp.net/attachments/1123074177356791909/1322042516186595370/image.png?ex=678924ca&is=6787d34a&hm=4348bdb399441869a7fced7d7b20c89f7c83f7957aea18f0af09a3135b56f713&=&format=webp&quality=lossless&width=1247&height=662" class="w-full h-full object-cover">
+                </div>
+            </div>
+        </div>
+
         <div class="grid md:grid-cols-3 gap-6">
-            <div class="bg-red-400 rounded-lg shadow-lg p-6 text-center transform transition duration-500 ease-in-out hover:scale-105 hover:blur-none blur-md opacity-0 animate-fade-in">
-                <h3 class="text-2xl font-bold mb-4">Raspberry Pi Builds</h3>
+            <div class="bg-green-400 rounded-lg shadow-lg p-6 text-center transform transition duration-500 ease-in-out hover:scale-105 hover:blur-none blur-md opacity-0 animate-fade-in">
+                <h3 class="text-2xl font-bold mb-4">Manjaro ARM Based Builds</h3>
                 <p class="mb-4">Optimized builds for Raspberry Pi devices.</p>
-                <a href="https://github.com/techtimefor/amogos-manjaroarm/releases/tag/v1.96" class="bg-green-200 hover:bg-green-500 text-white px-4 py-2 rounded">Download</a>
+                <a href="https://github.com/techtimefor/amogos-manjaroarm/releases/tag/v1.96" class="bg-green-600 hover:bg-green-800 text-white px-4 py-2 rounded">Download for RPi</a>
             </div>
             <div class="bg-blue-600 rounded-lg shadow-lg p-6 text-center transform transition duration-500 ease-in-out hover:scale-105 hover:blur-none blur-md opacity-0 animate-fade-in animation-delay-200">
                 <h3 class="text-2xl font-bold mb-4">Xubuntu Based Builds</h3>
