@@ -1,5 +1,6 @@
 ___________________________________________________________________________
 # techtimefor.github.io
-My Official Open Source Website No Website Template used coded by me
+My Official Open Source Website 
+Feel free to explore around, no template used.
 ___________________________________________________________________________
 
