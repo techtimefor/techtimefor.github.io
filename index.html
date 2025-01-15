@@ -76,5 +76,22 @@
         animation: fadeIn 1s ease-in-out forwards;
     }
 </style>
+
+<script>
+    const menuToggle = document.getElementById('menu-toggle');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const slides = document.querySelectorAll('.slide');
+    let currentSlide = 0;
+
+    menuToggle.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+    });
+
+    setInterval(() => {
+        slides[currentSlide].classList.add('hidden');
+        currentSlide = (currentSlide + 1) % slides.length;
+        slides[currentSlide].classList.remove('hidden');
+    }, 3000);
+</script>
 </body>
 </html>
