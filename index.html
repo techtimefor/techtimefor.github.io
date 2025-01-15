@@ -1,12 +1,59 @@
-<style>
-body {
-background: black;
-color: white;
-margins: 50px;
-}
-</style>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>techtimefor</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-black text-white">
+    <nav class="fixed top-0 left-0 w-full bg-gray-800 bg-opacity-80 backdrop-blur-md shadow-lg z-50">
+        <div class="container mx-auto flex justify-between items-center px-4 py-3">
+            <div class="text-xl font-bold">
+                techtimefor
+            </div>
+            <div class="hidden md:flex space-x-6">
+                <a href="#home" class="hover:text-gray-300">Home</a>
+                <a href="#amogos" class="hover:text-gray-300">AmogOS</a>
+                <a href="#projects" class="hover:text-gray-300">Projects</a>
+                <!-- Dropdown -->
+                <div class="relative group">
+                    <button class="hover:text-gray-300">More</button>
+                    <div class="absolute hidden group-hover:block bg-gray-700 text-white py-2 rounded shadow-lg mt-1">
+                        <a href="#about" class="block px-4 py-2 hover:bg-gray-600">About</a>
+                    </div>
+                </div>
+            </div>
+            <div class="md:hidden">
+                <button id="menu-toggle" class="focus:outline-none">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <div id="mobile-menu" class="hidden md:hidden bg-gray-700 text-white">
+            <a href="#home" class="block px-4 py-2 hover:bg-gray-600">Home</a>
+            <a href="#amogos" class="block px-4 py-2 hover:bg-gray-600">AmogOS</a>
+            <a href="#projects" class="block px-4 py-2 hover:bg-gray-600">Projects</a>
+            <a href="#about" class="block px-4 py-2 hover:bg-gray-600">About</a>
+        </div>
+    </nav>
 
-<title> Being Developed </title>
+    <div class="pt-20">
+        <div class="container mx-auto px-4">
+            <h1 class="text-4xl font-bold mb-6">Welcome!</h1>
+            <p class="text-lg">Something here finally!</p>
+        </div>
+    </div>
 
-<h1> Site Still Being Made</h1>
-<p> come back soon :D </p>
+    <script>
+        const menuToggle = document.getElementById('menu-toggle');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        menuToggle.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+    </script>
+</body>
+</html>
