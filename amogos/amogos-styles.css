@@ -1,0 +1,156 @@
+.techtimefor-amogos-hero {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 50vh;
+    padding: 4rem 1rem;
+    text-align: center;
+    margin-top: 6rem;
+    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
+                url('https://i.redd.it/mp9lsvwyz7o71.jpg');
+    background-size: cover;
+    background-position: center;
+    border-radius: 1rem;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.techtimefor-slideshow-section {
+    padding: 2rem 1rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.techtimefor-slideshow-container {
+    width: 100%;
+    max-width: 800px;
+    height: 400px;
+    margin: 0 auto;
+    border-radius: 1rem;
+    overflow: hidden;
+    border: 4px solid white;
+    position: relative;
+}
+
+#slideshow {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.techtimefor-slide {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: opacity 0.5s ease;
+}
+
+.techtimefor-slide.hidden {
+    display: none;
+}
+
+.techtimefor-features-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+}
+
+.techtimefor-feature {
+    background-color: var(--techtimefor-card-bg);
+    padding: 2rem;
+    border-radius: 1rem;
+    transition: transform 0.3s ease;
+}
+
+.techtimefor-feature:hover {
+    transform: translateY(-10px);
+}
+
+.techtimefor-feature h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: var(--techtimefor-primary-color);
+}
+
+.techtimefor-editions-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+}
+
+.techtimefor-edition {
+    padding: 2rem;
+    border-radius: 1rem;
+    background-color: var(--techtimefor-card-bg);
+    transition: transform 0.3s ease;
+    border-top: 4px solid var(--accent-color);
+}
+
+.techtimefor-edition:hover {
+    transform: translateY(-10px);
+}
+
+.techtimefor-edition h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: var(--accent-color);
+}
+
+.techtimefor-edition-button {
+    display: inline-block;
+    margin-top: 1.5rem;
+    padding: 0.75rem 1.5rem;
+    background-color: var(--accent-color);
+    color: white;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    transition: opacity 0.3s ease;
+}
+
+.techtimefor-edition-button:hover {
+    opacity: 0.9;
+}
+
+.techtimefor-cta-section {
+    background-color: var(--techtimefor-card-bg);
+    padding: 4rem 1rem;
+    margin: 4rem auto;
+    border-radius: 1rem;
+    max-width: 1200px;
+}
+
+.techtimefor-cta-section.techtimefor-amogos-support {
+    background-color: var(--techtimefor-card-bg);
+    padding: 3rem 1rem;
+    margin: 2rem auto;
+    border-radius: 1rem;
+    max-width: 800px;
+    text-align: center;
+}
+
+.techtimefor-cta-content {
+    margin: 0 auto;
+}
+
+.techtimefor-cta-content h2 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+.techtimefor-cta-content p {
+    margin-bottom: 2rem;
+    font-size: 1.25rem;
+    opacity: 0.9;
+}
+
+@media (min-width: 768px) {
+    .techtimefor-features-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .techtimefor-editions-container {
+        grid-template-columns: repeat(3, 1fr);
+    }
+} 
