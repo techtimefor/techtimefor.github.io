@@ -1,32 +1,351 @@
 <!DOCTYPE html>
-<html lang="en" >
-
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>hmmbot</title>
-  
-  
-  
-  
-  
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hmmbot Help Chat</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: 'Inter', 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--techtimefor-bg-color);
+            color: var(--techtimefor-text-color);
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .title-bar {
+            display: flex;
+            align-items: center;
+            padding: 0.5rem 1rem;
+            background-color: rgba(31, 41, 55, 0.7);
+            backdrop-filter: blur(10px);
+            color: var(--techtimefor-text-color);
+            position: relative;
+            z-index: 2;
+        }
+
+        .title-bar .profile-photo {
+            font-size: 2rem;
+            margin-right: 0.5rem;
+        }
+
+        .title-bar .title {
+            font-weight: bold;
+        }
+
+        #chatLog {
+            flex-grow: 1;
+            padding: 1rem;
+            overflow-y: auto;
+            background-image: url("https://i.pinimg.com/736x/45/3d/01/453d01f9abbae30d7aa6539259d7d214.jpg"); 
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: cover;
+        }
+
+        .message {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 0.5rem;
+        }
+
+        .message .profile-photo {
+            font-size: 2rem;
+            margin-right: 0.5rem;
+        }
+
+        .message .text {
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            max-width: 70%;
+            word-wrap: break-word;
+            backdrop-filter: blur(5px); 
+        }
+
+        .user .text {
+            background-color: rgba(220, 248, 198, 0.8); 
+            color: #000;
+        }
+
+        .bot .text {
+            background-color: rgba(255, 255, 255, 0.8); 
+            color: #000;
+        }
+
+        .user {
+            justify-content: flex-end;
+        }
+
+        .user .text {
+            align-self: flex-end;
+        }
+
+        .typing-container {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .typing-bubble {
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            backdrop-filter: blur(5px);
+        }
+
+        .typing-indicator {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: #555;
+            margin: 0 2px;
+            animation: typing 1s infinite;
+        }
+
+        .typing-indicator:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .typing-indicator:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes typing {
+            0% {
+                opacity: 0.7;
+            }
+            50% {
+                opacity: 0.3;
+            }
+            100% {
+                opacity: 0.7;
+            }
+        }
+
+        .suggestion-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            padding: 0.5rem;
+            background-color: rgba(31, 41, 55, 0.4);
+            backdrop-filter: blur(5px);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .suggestion-button {
+            background-color: rgba(255, 255, 255, 0.9);
+            color: #000;
+            border: none;
+            border-radius: 1rem;
+            padding: 0.5rem 1rem;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+        }
+
+        .suggestion-button:hover {
+            background-color: rgba(255, 235, 59, 0.9);
+            transform: translateY(-2px);
+        }
+
+        #userBoxContainer {
+            position: relative;
+            padding: 0.5rem;
+            background-color: rgba(31, 41, 55, 0.7); 
+            backdrop-filter: blur(10px);
+        }
+
+        #userBox {
+            padding: 0.75rem;
+            border: none;
+            border-radius: 0.5rem;
+            background-color: transparent;
+            color: var(--techtimefor-text-color);
+            font-size: 1rem;
+            outline: none;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --techtimefor-accent-color: #ffeb3b; 
+        }
+    </style>
 </head>
-
 <body>
+    <div class="title-bar">
+        <span class="profile-photo">🤖</span>
+        <div class="title">Hmmbot Support</div>
+    </div>
+    <div id="chatLog">
+    </div>
+    <div class="suggestion-container" id="suggestionContainer">
+        <button class="suggestion-button" onclick="sendSuggestion('Is Hmmbot still available?')">Is Hmmbot available?</button>
+        <button class="suggestion-button" onclick="sendSuggestion('What commands does Hmmbot have?')">What commands?</button>
+        <button class="suggestion-button" onclick="sendSuggestion('Who made Hmmbot?')">Who made Hmmbot?</button>
+        <button class="suggestion-button" onclick="sendSuggestion('Why was it discontinued?')">Why discontinued?</button>
+    </div>
+    <div id="userBoxContainer">
+        <input type="text" id="userBox" placeholder="Type a message..." onkeydown="if (event.keyCode == 13 && this.value.trim() !== '') { talk() }">
+    </div>
+    <script>
+        const chatLog = document.getElementById('chatLog');
+        const userBox = document.getElementById('userBox');
+        let typingIndicator = null;
+        
+        const know = {
+            "hello": "Hi there! I'm the Hmmbot support assistant. I should let you know that Hmmbot has been discontinued and is no longer available. How can I help you today?",
+            "hi": "Hello! I'm the Hmmbot support assistant. Just to let you know, Hmmbot has been discontinued. Is there anything specific you'd like to know about it?",
+            "how do i invite hmmbot": "I'm sorry to inform you that Hmmbot has been discontinued and is no longer available for invites. The project was shut down in 2020.",
+            "is hmmbot still available": "Unfortunately, Hmmbot has been discontinued and is no longer available. The service was shut down in 2020 due to API changes and the developer wanted to focus on other projects.",
+            "what commands does hmmbot have": "Hmmbot had commands for welcoming users, logging events, playing music, and of course... hmming! However, I should mention that Hmmbot has been discontinued and is no longer operational.",
+            "who made hmmbot": "Hmmbot was created by techtimefor. It was a fun project but has since been discontinued.",
+            "hmm": "Hmmmmmmmmmm... 🤔 That was Hmmbot's favorite thing to say! Though sadly, Hmmbot is no longer with us as the service has been discontinued.",
+            "what commands": "Hmmbot had commands for welcoming users, logging events, playing music, and of course... hmming! However, I should mention that Hmmbot has been discontinued.",
+            "why was it discontinued": "Hmmbot was discontinued due to several factors: increasing hosting costs, Discord API changes that required significant updates, and the developer's time constraints. It was a difficult decision, but necessary at the time.",
+            "alternative": "There are alternatives to Hmmbot available like current bots by techtimefor and other bots.",
+            "when": "Hmmbot was discontinued in 2020 after running for about 1 year.",
+            "source code": "The source code for Hmmbot is not publicly available, as it was a private project by techtimefor.",
+            "yo": "Yo, whats up, need any assisstance?"
+        };
 
-  <html>
-    <body>
-        <p id="chatLog"><font color="blue">How can i help?<br></p>
-        <input id="userBox" type="text" onkeydown="if (event.keyCode == 13) {talk()}">
-    </body>
-</html>
-  
-  
+        function showTypingIndicator() {
+            hideTypingIndicator();
+            
+            typingIndicator = document.createElement('div');
+            typingIndicator.classList.add('typing-container');
+            typingIndicator.innerHTML = `
+                <span class="profile-photo">🤖</span>
+                <div class="typing-bubble">
+                    <span class="typing-indicator"></span>
+                    <span class="typing-indicator"></span>
+                    <span class="typing-indicator"></span>
+                </div>
+            `;
+            chatLog.appendChild(typingIndicator);
+            chatLog.scrollTop = chatLog.scrollHeight;
+        }
 
-    <script  src="./script.js"></script>
+        function hideTypingIndicator() {
+            if (typingIndicator && typingIndicator.parentNode) {
+                typingIndicator.parentNode.removeChild(typingIndicator);
+                typingIndicator = null;
+            }
+        }
 
+        function streamText(element, text, speed, callback) {
+            let index = 0;
+            element.textContent = "";
+            function addCharacter() {
+                if (index < text.length) {
+                    element.textContent += text[index];
+                    index++;
+                    setTimeout(addCharacter, speed);
+                } else if (callback) {
+                    callback();
+                }
+            }
+            addCharacter();
+        }
 
+        function addBotMessage(text, callback) {
+            hideTypingIndicator();
+            
+            const botMessage = document.createElement('div');
+            botMessage.classList.add('message', 'bot');
+            
+            const messageContent = document.createElement('div');
+            messageContent.classList.add('text');
+            
+            botMessage.innerHTML = `<span class="profile-photo">🤖</span>`;
+            botMessage.appendChild(messageContent);
+            
+            chatLog.appendChild(botMessage);
+            
+            streamText(messageContent, text, 30, () => {
+                chatLog.scrollTop = chatLog.scrollHeight;
+                if (callback) callback();
+            });
+        }
 
+        function sendSuggestion(text) {
+            const userMessage = document.createElement('div');
+            userMessage.classList.add('message', 'user');
+            userMessage.innerHTML = `
+                <div class="text">${text}</div>
+                <span class="profile-photo">😎</span>
+            `;
+            chatLog.appendChild(userMessage);
+            chatLog.scrollTop = chatLog.scrollHeight;
 
+            processUserInput(text);
+        }
+
+        function processUserInput(userText) {
+            showTypingIndicator();
+
+            const userTextLower = userText.toLowerCase().trim();
+            let botResponse = "I'm not sure how to respond to that. What I can tell you is that Hmmbot has been discontinued and is no longer available. Is there something specific about Hmmbot you'd like to know?";
+            
+            for (const key in know) {
+                if (userTextLower.includes(key)) {
+                    botResponse = know[key];
+                    break;
+                }
+            }
+
+            setTimeout(() => {
+                addBotMessage(botResponse);
+                
+                if (botResponse.includes("discontinued") && !document.querySelector('.suggestion-button[data-asked="why"]')) {
+                    setTimeout(() => {
+                        updateSuggestions();
+                    }, 1000);
+                }
+            }, 1500);
+        }
+
+        function updateSuggestions() {
+            const suggestionContainer = document.getElementById('suggestionContainer');
+            suggestionContainer.innerHTML = `
+                <button class="suggestion-button" data-asked="why" onclick="sendSuggestion('Why was it discontinued?')">Why discontinued?</button>
+                <button class="suggestion-button" onclick="sendSuggestion('Are there alternatives?')">Alternatives?</button>
+                <button class="suggestion-button" onclick="sendSuggestion('When was it discontinued?')">When?</button>
+                <button class="suggestion-button" onclick="sendSuggestion('Is the source code available?')">Source code?</button>
+            `;
+        }
+
+        function talk() {
+            const userText = userBox.value.trim();
+            
+            if (userText === '') return; 
+            
+            const userMessage = document.createElement('div');
+            userMessage.classList.add('message', 'user');
+            userMessage.innerHTML = `
+                <div class="text">${userText}</div>
+                <span class="profile-photo">😎</span>
+            `;
+            chatLog.appendChild(userMessage);
+            userBox.value = ''; 
+            chatLog.scrollTop = chatLog.scrollHeight;
+
+            processUserInput(userText);
+        }
+
+        window.onload = function() {
+            setTimeout(() => {
+                showTypingIndicator();
+                setTimeout(() => {
+                    addBotMessage("Hello! I'm the Hmmbot support assistant. I need to inform you that Hmmbot has been discontinued and is no longer available. How can I help you with any questions about the former service?");
+                }, 1500);
+            }, 500);
+        };
+    </script>
 </body>
-
 </html>
