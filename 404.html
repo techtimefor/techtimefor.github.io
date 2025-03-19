@@ -1,9 +1,227 @@
-<title> techtimefor Offical | Page Not Found </title>
-<body style="background-color:black;">
-      <p><center><font color="white">Error Page Not Found Maybe Check https://github.com/techtimefor/techtimefor.github.io</center></p>
-            <p><center><font color="white">Links 
-            techtimefor.glithub.io/hmmbot.html
-            techtimefor.github.io/discordserver.html
-            More coming soon ;)</center></p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#ff6666">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://techtimefor.github.io/404.html">
+    <meta property="og:title" content="techtimefor - Page Not Found">
+    <meta property="og:description" content="The tech guy.">
+    <title>techtimefor - Page Not Found</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            background: #0a0a0a;
+            position: relative;
+            color: #fff;
+            font-family: 'Inter', 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+        
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 10% 20%, rgba(220, 20, 60, 0.2) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(178, 34, 34, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 30% 80%, rgba(255, 69, 0, 0.1) 0%, transparent 40%);
+            z-index: 0;
+        }
+        
+        .error-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 2rem;
+            position: relative;
+            z-index: 1;
+            margin-top: 50px;
+        }
+        
+        .error-code {
+            font-size: 8rem;
+            font-weight: bold;
+            margin: 0;
+            color: #ff3333;
+            text-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 1; text-shadow: 0 0 10px rgba(255, 0, 0, 0.5); }
+            50% { opacity: 0.7; text-shadow: 0 0 20px rgba(255, 0, 0, 0.8); }
+            100% { opacity: 1; text-shadow: 0 0 10px rgba(255, 0, 0, 0.5); }
+        }
+        
+        .error-message {
+            font-size: 1.5rem;
+            margin: 1rem 0 2rem;
+            max-width: 600px;
+            color: #f8f8f8;
+        }
+        
+        .links-container {
+            background-color: rgba(50, 10, 10, 0.7);
+            backdrop-filter: blur(10px);
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            margin-top: 2rem;
+            max-width: 600px;
+            width: 100%;
+            border: 1px solid rgba(255, 0, 0, 0.2);
+        }
+        
+        .links-title {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            color: #ff6666;
+        }
+        
+        .links-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        
+        .links-list a {
+            color: #fff;
+            text-decoration: none;
+            padding: 0.5rem;
+            border-radius: 0.25rem;
+            transition: all 0.2s ease;
+            display: block;
+        }
+        
+        .links-list a:hover {
+            background-color: rgba(255, 0, 0, 0.2);
+            transform: translateX(5px);
+            color: #ff9999;
+        }
+        
+        .back-button {
+            display: inline-block;
+            margin-top: 2rem;
+            padding: 0.75rem 1.5rem;
+            background-color: #cc0000;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 0.5rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            border: none;
+        }
+        
+        .back-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(255, 0, 0, 0.3);
+            background-color: #ff0000;
+        }
+        
+        .github-link {
+            margin-top: 1rem;
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+        }
+        
+        .github-link:hover {
+            color: #ff6666;
+        }
+        
+        .techtimefor-navbar {
+            background-color: rgba(30, 0, 0, 0.9);
+        }
+        
+        .techtimefor-hover-indicator {
+            background-color: #ff3333;
+        }
+        
+        .techtimefor-footer {
+            background-color: rgba(30, 0, 0, 0.9);
+        }
+    </style>
+</head>
+<body>
+    <nav class="techtimefor-navbar">
+        <div class="techtimefor-nav-container">
+            <div class="techtimefor-logo">techtimefor</div>
+            <ul class="techtimefor-nav-links">
+                <li>
+                    <a href="/">Home</a>
+                    <span class="techtimefor-hover-indicator"></span>
+                </li>
+                <li>
+                    <a href="/amogos">AmogOS</a>
+                    <span class="techtimefor-hover-indicator"></span>
+                </li>
+                <li>
+                    <a href="/projects">Projects</a>
+                    <span class="techtimefor-hover-indicator"></span>
+                </li>
+                <li>
+                    <a href="/about">About</a>
+                    <span class="techtimefor-hover-indicator"></span>
+                </li>
+            </ul>
+            <div class="techtimefor-menu-toggle" id="menu-toggle">
+                <svg class="techtimefor-menu-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
+            </div>
+        </div>
+        <div class="techtimefor-mobile-menu hidden" id="mobile-menu">
+            <a href="/" class="techtimefor-mobile-item">Home</a>
+            <a href="/amogos" class="techtimefor-mobile-item">AmogOS</a>
+            <a href="/projects" class="techtimefor-mobile-item">Projects</a>
+            <a href="/about" class="techtimefor-mobile-item">About</a>
+        </div>
+    </nav>
+
+    <div class="error-container">
+        <h1 class="error-code">404</h1>
+        <p class="error-message">Oops! The page you're looking for seems to have disappeared into the digital void.</p>
+        
+        <a href="/" class="back-button">Go Back Home</a>
+        
+        <div class="links-container">
+            <h2 class="links-title">You might be looking for:</h2>
+            <ul class="links-list">
+                <li><a href="/hmmbot.html">Hmmbot</a></li>
+                <li><a href="/amogos">AmogOS</a></li>
+                <li><a href="/projects">Projects</a></li>
+            </ul>
+        </div>
+        
+        <a href="https://github.com/techtimefor/techtimefor.github.io" class="github-link">See website's source code</a>
+    </div>
+
+    <footer class="techtimefor-footer">
+        <div class="techtimefor-footer-content">
+            <p>© 2028 techtimefor</p>
+        </div>
+    </footer>
+
+    <script>
+        const menuToggle = document.getElementById('menu-toggle');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        menuToggle.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+    </script>
+</body>
+</html>
 
       
