@@ -4,95 +4,124 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#ff0000">
-    <title>techtimefor</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <title>AmogOS - techtimefor</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="./amogos-styles.css">
 </head>
-<body class="bg-black text-white">
-    <nav class="fixed top-0 left-0 w-full px-4 bg-neutral-700 bg-opacity-70 backdrop-blur-md shadow-md z-50">
-        <div class="container mx-auto flex justify-between items-center py-4">
-            <div class="text-2xl font-bold tracking-wide">
-                techtimefor
-            </div>
-            <ul class="hidden md:flex space-x-8">
+<body>
+    <nav class="techtimefor-navbar">
+        <div class="techtimefor-nav-container">
+            <div class="techtimefor-logo">techtimefor</div>
+            <ul class="techtimefor-nav-links">
                 <li>
-                    <button class="relative group text-lg font-medium py-2 px-4 transition duration-300 ease-in-out hover:text-gray-300">
-                       <a href="/"> Home </a>
-                        <span class="absolute left-0 bottom-0 w-0 h-0.5 bg-gray-300 transition-all duration-300 ease-in-out group-hover:w-full"></span>
-                    </button>
+                    <a href="/">Home</a>
+                    <span class="techtimefor-hover-indicator"></span>
+                </li>
+                <li class="active">
+                    <button>AmogOS</button>
+                    <span class="techtimefor-active-indicator"></span>
                 </li>
                 <li>
-                    <button class="relative group text-lg font-medium py-2 px-4 text-gray-300 hover:scale-25">
-                        AmogOS
-                        <span class="absolute left-0 bottom-0 h-0.5 bg-gray-300 w-full"></span>
-                    </button>
+                    <a href="/projects">Projects</a>
+                    <span class="techtimefor-hover-indicator"></span>
                 </li>
                 <li>
-                    <button class="relative group text-lg font-medium py-2 px-4 transition duration-300 ease-in-out hover:text-gray-300">
-                        <a href="/projects"> Projects </a>
-                        <span class="absolute left-0 bottom-0 w-0 h-0.5 bg-gray-300 transition-all duration-300 ease-in-out group-hover:w-full"></span>
-                    </button>
-                </li>
-                <li>
-                    <button class="relative group text-lg font-medium py-2 px-4 transition duration-300 ease-in-out hover:text-gray-300">
-                        <a href="/about"> About </a>
-                        <span class="absolute left-0 bottom-0 w-0 h-0.5 bg-gray-300 transition-all duration-300 ease-in-out group-hover:w-full"></span>
-                    </button>
+                    <a href="/about">About</a>
+                    <span class="techtimefor-hover-indicator"></span>
                 </li>
             </ul>
-            <div class="md:hidden">
-                <button id="menu-toggle" class="focus:outline-none">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-                    </svg>
-                </button>
+            <div class="techtimefor-menu-toggle" id="menu-toggle">
+                <svg class="techtimefor-menu-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
             </div>
         </div>
-        <div id="mobile-menu" class="hidden md:hidden space-y-4 px-4 py-6">
-            <button class="block w-full text-lg px-4 py-6 bg-gray-700 rounded-lg text-left hover:bg-gray-600"><a href="/">Home</a></button>
-            <button class="block w-full text-lg px-4 py-6 bg-gray-600 rounded-lg text-left hover:scale-1.5"><a href="/amogos">AmogOS</a></button>
-            <button class="block w-full text-lg px-4 py-6 bg-gray-700 rounded-lg text-left hover:bg-gray-600"><a href="/projects">Projects</a></button>
-            <button class="block w-full text-lg px-4 py-6 bg-gray-700 rounded-lg text-left hover:bg-gray-600"><a href="/about">About</a></button>
+        <div class="techtimefor-mobile-menu hidden" id="mobile-menu">
+            <a href="/" class="techtimefor-mobile-item">Home</a>
+            <a href="/amogos" class="techtimefor-mobile-item active">AmogOS</a>
+            <a href="/projects" class="techtimefor-mobile-item">Projects</a>
+            <a href="/about" class="techtimefor-mobile-item">About</a>
         </div>
     </nav>
 
-    <div class="container mt-24 mb-20 mx-auto px-4 py-12">
-        <h2 class="text-3xl font-bold text-center mb-4 transform transition duration-500 ease-in-outhover:blur-none blur-md opacity-0 animate-fade-in">AmogOS</h2>
-        <p class="text-center mb-8 transform transition duration-500 ease-in-out hover:blur-none blur-md opacity-0 animate-fade-in">Make your PC sussy, choose the edition that suits you!</p>
+    <header class="techtimefor-amogos-hero">
+        <div class="techtimefor-ambient-bg"></div>
+        <div class="techtimefor-hero-content">
+            <h1 class="techtimefor-fade-in">AmogOS</h1>
+            <p class="techtimefor-fade-in">Make your PC sussy with our customized Linux distribution!</p>
+        </div>
+    </header>
 
-        <div class="flex justify-center">
-            <div class="rounded-xl overflow-hidden shadow-lg mb-8 border-white border-8 w-[400px] h-[200px] transform transition duration-500 ease-in-out hover:blur-none blur-md opacity-0 animate-fade-in">
-                <div class="relative w-full h-full">
-                    <div id="slideshow" class="absolute inset-0">
-                        <img src="https://media.discordapp.net/attachments/1123074177356791909/1322052317654290513/Notes_241227_040324_235.jpg?ex=67892deb&is=6787dc6b&hm=bac56740f388b7ed8f9b7b8965a69404094afdc90dd18f70d1cc166d32f55f57&=&format=webp" class="absolute w-full h-full object-contain slide rounded-xl">
-                        <img src="https://media.discordapp.net/attachments/1123074177356791909/1322042516186595370/image.png?ex=678924ca&is=6787d34a&hm=4348bdb399441869a7fced7d7b20c89f7c83f7957aea18f0af09a3135b56f713&=&format=webp&quality=lossless" class="absolute w-full h-full object-contain slide rounded-xl hidden">
-                    </div>
-                </div>
+    <section class="techtimefor-slideshow-section">
+        <div class="techtimefor-slideshow-container techtimefor-fade-in">
+            <div id="slideshow">
+                <img src="https://media.discordapp.net/attachments/1123074177356791909/1322052317654290513/Notes_241227_040324_235.jpg?ex=67daeaeb&is=67d9996b&hm=d5082ed866b95d7e135536e5d8ac88ee16ac1c40496d37a41845fdb678bad6dc&=&format=webp&width=1266&height=800" class="techtimefor-slide">
+                <img src="https://media.discordapp.net/attachments/1123074177356791909/1322042516186595370/image.png?ex=67dae1ca&is=67d9904a&hm=a7e84c71732607a3ef7d44cd6de972f41168953c6672b560201e8e6d6ea12e64&=&format=webp&quality=lossless&width=688&height=365" class="techtimefor-slide hidden">
             </div>
         </div>
+    </section>
 
-        <div class="grid md:grid-cols-3 gap-6">
-            <div class="bg-green-400 rounded-lg shadow-lg p-6 text-center transform transition duration-500 ease-in-out hover:scale-105 hover:blur-none blur-md opacity-0 animate-fade-in">
-                <h3 class="text-2xl font-bold mb-4">Manjaro Unstable Based Builds</h3>
-                <p class="mb-4">A mix of fresh software with a touch of stability.</p>
-                <a href="https://github.com/techtimefor/amogos-manjaroarm/releases/tag/v1.96" class="bg-green-600 hover:bg-green-800 text-white px-4 py-2 rounded">Download for Raspberry Pi</a>
+    <section class="techtimefor-features-section">
+        <h2 class="techtimefor-section-title techtimefor-fade-in">Key Features</h2>
+        <div class="techtimefor-features-grid">
+            <div class="techtimefor-feature techtimefor-fade-in">
+                <h3>Updated Regularly</h3>
+                <p>More updated than AmogOS v1.95 ;D, with various editions to choose from.</p>
             </div>
-            <div class="bg-blue-400 rounded-lg shadow-lg p-6 text-center transform transition duration-500 ease-in-out hover:scale-105 hover:blur-none blur-md opacity-0 animate-fade-in animation-delay-200">
-                <h3 class="text-2xl font-bold mb-4">Xubuntu 24.04 LTS Based Builds</h3>
-                <p class="mb-4">Up to date software with regular updates & long term ready.</p>
-                <a href="https://github.com/techtimefor/AmogOS-Xubuntu-/releases/tag/v1.95" class="bg-blue-600 hover:bg-blue-800 text-white px-4 py-2 rounded">Download for x86_64</a>
+            <div class="techtimefor-feature techtimefor-fade-in">
+                <h3>Stable & Reliable</h3>
+                <p>Use smoothly on any pc, regardless of hardware.</p>
             </div>
-            <div class="bg-red-400 rounded-lg shadow-lg p-6 text-center transform transition duration-500 ease-in-out hover:scale-105 hover:blur-none blur-md opacity-0 animate-fade-in animation-delay-400">
-                <h3 class="text-2xl font-bold mb-4">Debian 12 Stable Based Builds</h3>
-                <p class="mb-4">So stable that you don't need to worry about it falling apart!</p>
-                <a href="https://github.com/techtimefor/AmogOS-Debian/releases/tag/1.97" class="bg-red-600 hover:bg-red-800 text-white px-4 py-2 rounded">Download for x86_64</a>
+            <div class="techtimefor-feature techtimefor-fade-in">
+                <h3>Installable & Raspberry Pi Compatible</h3>
+                <p>Ability to use as an actual os and run it on almost all raspberry pi models.</p>
+            </div>
+            <div class="techtimefor-feature techtimefor-fade-in">
+                <h3>Minimal</h3>
+                <p>Comes with Ulauncher & Chromium.</p>
             </div>
         </div>
-    </div>
+    </section>
+
+    <section class="techtimefor-editions-section">
+        <h2 class="techtimefor-section-title techtimefor-fade-in">Available Editions</h2>
+        <div class="techtimefor-editions-container">
+            <div class="techtimefor-edition techtimefor-fade-in" style="--accent-color: var(--techtimefor-green);">
+                <h3>Manjaro Unstable Based</h3>
+                <p>A mix of fresh software with a touch of stability.</p>
+                <a href="https://github.com/techtimefor/amogos-manjaroarm/releases/tag/v1.96" class="techtimefor-edition-button">Download for Raspberry Pi</a>
+            </div>
+            <div class="techtimefor-edition techtimefor-fade-in" style="--accent-color: var(--techtimefor-blue);">
+                <h3>Xubuntu 24.04 LTS Based</h3>
+                <p>Up to date software with regular updates & long term ready.</p>
+                <a href="https://github.com/techtimefor/AmogOS-Xubuntu-/releases/tag/v1.95" class="techtimefor-edition-button">Download for x86_64</a>
+            </div>
+            <div class="techtimefor-edition techtimefor-fade-in" style="--accent-color: var(--techtimefor-red);">
+                <h3>Debian 12 Stable Based</h3>
+                <p>So stable that you don't need to worry about it falling apart!</p>
+                <a href="https://github.com/techtimefor/AmogOS-Debian/releases/tag/1.97" class="techtimefor-edition-button">Download for x86_64</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="techtimefor-cta-section techtimefor-amogos-support">
+        <div class="techtimefor-cta-content techtimefor-fade-in">
+            <h2>Need OS Support?</h2>
+            <p>Join the Discord, im always avaliable to help!</p>
+            <a href="https://discord.gg/6ut87Hqukr" class="techtimefor-cta-button primary">Join Discord</a>
+        </div>
+    </section>
+
+    <footer class="techtimefor-footer">
+        <div class="techtimefor-footer-content">
+            <p>© 2024 techtimefor | <a href="https://github.com/techtimefor">GitHub</a></p>
+        </div>
+    </footer>
 
     <script>
         const menuToggle = document.getElementById('menu-toggle');
         const mobileMenu = document.getElementById('mobile-menu');
-        const slides = document.querySelectorAll('.slide');
+        const slides = document.querySelectorAll('.techtimefor-slide');
         let currentSlide = 0;
 
         menuToggle.addEventListener('click', () => {
@@ -104,23 +133,13 @@
             currentSlide = (currentSlide + 1) % slides.length;
             slides[currentSlide].classList.remove('hidden');
         }, 3000);
+        
+        // Add a resize listener to hide the menu when switching to desktop
+        window.addEventListener('resize', () => {
+            if (window.innerWidth >= 768) { // same breakpoint as your CSS
+                mobileMenu.classList.add('hidden');
+            }
+        });
     </script>
-
-<style>
-    @keyframes fadeIn {
-        from {
-            opacity: 0;
-            filter: blur(10px);
-        }
-        to {
-            opacity: 1;
-            filter: blur(0);
-        }
-    }
-
-    .animate-fade-in {
-        animation: fadeIn 1s ease-in-out forwards;
-    }
-</style>
 </body>
 </html>
