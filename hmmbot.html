@@ -1,40 +1,219 @@
-<title>Get Hmmbot</title>
-<center><font color="yellow">Get Hmm bot now</center>
-<font color="white"><p><a href="#About">About</a></p>       <p><a href="#Main Features">Main Features</a></p>       <p><a href="#Creater">Creater</a></p>         <p><a href="./hmmbotchangelog.html">Changelog</a></p>
-<body style="background-color:black;">
-  <footer>
-    <footer>
-<img src="https://raw.githubusercontent.com/techtimefor/techtimefor.github.io/master/hmmsticker.png" alt="Hmmbot" width="500" height="300
-">
-<p><font color="white">The bot which likes to hmm with alot of extra hmms</p>
-
- <b><p><font color="white">Main Features</p></b>
-      <p><font color="white">Can welcome users, log stuff,Play Music, Spam and IMPORTANTLY hmm</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#FFEA00">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://techtimefor.github.io/hmmbot.html">
+    <meta property="og:title" content="Get Hmmbot - techtimefor">
+    <meta property="og:description" content="The bot that likes to hmm with a lot of extra hmms.">
+    <title>Get Hmmbot - techtimefor</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            background: black;
+            position: relative;
+            color: #fff;
+        }
         
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 10% 20%, rgba(41, 128, 185, 0.2) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(142, 68, 173, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 30% 80%, rgba(255, 204, 0, 0.1) 0%, transparent 40%);
+            z-index: 0;
+        }
+        
+        .techtimefor-main-content {
+            flex: 1;
+            padding: 2rem 1rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+        .techtimefor-hmmbot-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 1rem;
+            margin-bottom: 2rem;
+            margin-top: 4rem;
+        }
+        .techtimefor-feature-list {
+            list-style: none;
+            padding: 0;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        .techtimefor-feature-card {
+            background-color: rgb(255, 204, 0);
+            color: #000;
+            padding: 2.5rem;
+            border-radius: 0.75rem;
+            text-align: center;
+            box-shadow: 0 3px 7px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            font-size: 1.2rem;
+        }
+        .techtimefor-feature-card:hover {
+            transform: translateY(-7px);
+        }
+        .techtimefor-feature-card::before {
+            content: attr(data-emoji);
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 12rem;
+            opacity: 0.15;
+            z-index: 0;
+        }
+        .techtimefor-feature-card > * {
+            position: relative;
+            z-index: 1;
+        }
+        .techtimefor-hmmbot-description {
+            font-size: 1.2rem;
+            opacity: 0.8;
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .floating-chat-button {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: var(--techtimefor-accent-color);
+            color: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 100;
+        }
+        
+        .floating-chat-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+        }
+        
+        .floating-chat-button::before {
+            content: "Chat with Support";
+            position: absolute;
+            right: 70px;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            font-size: 0.9rem;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+            white-space: nowrap;
+        }
+        
+        .floating-chat-button:hover::before {
+            opacity: 1;
+        }
+        
+        :root {
+            --techtimefor-accent-color: #ffeb3b;
+        }
+        h3 {
+            color: var(--techtimefor-accent-color);
+        }
+    </style>
+</head>
+<body class="techtimefor-bg-color">
+    <nav class="techtimefor-navbar">
+        <div class="techtimefor-nav-container">
+            <div class="techtimefor-logo">techtimefor</div>
+            <ul class="techtimefor-nav-links">
+                <li>
+                    <a href="/">Home</a>
+                    <span class="techtimefor-hover-indicator"></span>
+                </li>
+                <li>
+                    <a href="/amogos">AmogOS</a>
+                    <span class="techtimefor-hover-indicator"></span>
+                </li>
+                <li>
+                    <a href="/projects">Projects</a>
+                    <span class="techtimefor-hover-indicator"></span>
+                </li>
+                <li>
+                    <a href="/about">About</a>
+                    <span class="techtimefor-hover-indicator"></span>
+                </li>
+            </ul>
+            <div class="techtimefor-menu-toggle" id="menu-toggle">
+                <svg class="techtimefor-menu-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
+            </div>
+        </div>
+        <div class="techtimefor-mobile-menu hidden" id="mobile-menu">
+            <a href="/" class="techtimefor-mobile-item">Home</a>
+            <a href="/amogos" class="techtimefor-mobile-item">AmogOS</a>
+            <a href="/projects" class="techtimefor-mobile-item">Projects</a>
+            <a href="/about" class="techtimefor-mobile-item">About</a>
+        </div>
+    </nav>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-Help bot
-</button>
+    <main class="techtimefor-main-content">
+        <img src="https://raw.githubusercontent.com/techtimefor/techtimefor.github.io/master/hmmsticker.png" alt="Hmmbot" class="techtimefor-hmmbot-image">
+        <p class="techtimefor-hmmbot-description">The bot which likes to hmm with a lot of extra hmms.</p>
 
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel"><font color="blue">Help bot</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <iframe src="https://techtimefor.github.io/helphmmbot.html">
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
+        <h3>Main Features</h3>
+        <ul class="techtimefor-feature-list">
+            <li class="techtimefor-feature-card" data-emoji="🎉">Welcomes users</li>
+            <li class="techtimefor-feature-card" data-emoji="📝">Logs server events</li>
+            <li class="techtimefor-feature-card" data-emoji="🎵">Plays Music</li>
+            <li class="techtimefor-feature-card" data-emoji="💣">Spams (use responsibly!)</li>
+            <li class="techtimefor-feature-card" data-emoji="🤖">Importantly, hmms!</li>
+        </ul>
+    </main>
+
+    <div class="floating-chat-button" onclick="openHelpChat()">
+        💬
     </div>
-  </div>
-</div>     
+
+    <footer class="techtimefor-footer">
+        <div class="techtimefor-footer-content">
+            <p>© 2019 techtimefor</p>
+        </div>
+    </footer>
+
+    <script>
+        const menuToggle = document.getElementById('menu-toggle');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        menuToggle.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        function openHelpChat() {
+            window.open("helphmmbot.html", "HelpHmmbot", "width=600,height=500");
+        }
+    </script>
+</body>
+</html>     
