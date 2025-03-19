@@ -134,9 +134,8 @@
             slides[currentSlide].classList.remove('hidden');
         }, 3000);
         
-        // Add a resize listener to hide the menu when switching to desktop
         window.addEventListener('resize', () => {
-            if (window.innerWidth >= 768) { // same breakpoint as your CSS
+            if (window.innerWidth >= 768) { 
                 mobileMenu.classList.add('hidden');
             }
         });
