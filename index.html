@@ -5,86 +5,109 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#ff0000">
     <title>techtimefor</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="styles.css">
 </head>
-<body class="bg-black text-white">
-    <nav class="fixed top-0 left-0 w-full px-4 bg-neutral-700 bg-opacity-70 backdrop-blur-md shadow-md z-50">
-        <div class="container mx-auto flex justify-between items-center py-4">
-            <div class="text-2xl font-bold tracking-wide">
-                techtimefor
-            </div>
-            <ul class="hidden md:flex space-x-8">
-                <li>
-                    <button class="relative group text-lg font-medium py-2 px-4 text-gray-300 hover:scale-25">
-                        Home
-                        <span class="absolute left-0 bottom-0 h-0.5 bg-gray-300 w-full"></span>
-                    </button>
+<body>
+    <nav class="techtimefor-navbar">
+        <div class="techtimefor-nav-container">
+            <div class="techtimefor-logo">techtimefor</div>
+            <ul class="techtimefor-nav-links">
+                <li class="active">
+                    <button>Home</button>
+                    <span class="techtimefor-active-indicator"></span>
                 </li>
                 <li>
-                    <button class="relative group text-lg font-medium py-2 px-4 transition duration-300 ease-in-out hover:text-gray-300">
-                        <a href="/amogos"> AmogOS </a>
-                        <span class="absolute left-0 bottom-0 w-0 h-0.5 bg-gray-300 transition-all duration-300 ease-in-out group-hover:w-full"></span>
-                    </button>
+                    <a href="/amogos">AmogOS</a>
+                    <span class="techtimefor-hover-indicator"></span>
                 </li>
                 <li>
-                    <button class="relative group text-lg font-medium py-2 px-4 transition duration-300 ease-in-out hover:text-gray-300">
-                        <a href="/projects">Projects</a>
-                        <span class="absolute left-0 bottom-0 w-0 h-0.5 bg-gray-300 transition-all duration-300 ease-in-out group-hover:w-full"></span>
-                    </button>
+                    <a href="/projects">Projects</a>
+                    <span class="techtimefor-hover-indicator"></span>
                 </li>
                 <li>
-                    <button class="relative group text-lg font-medium py-2 px-4 transition duration-300 ease-in-out hover:text-gray-300">
-                        <a href="/about">About</a>
-                        <span class="absolute left-0 bottom-0 w-0 h-0.5 bg-gray-300 transition-all duration-300 ease-in-out group-hover:w-full"></span>
-                    </button>
+                    <a href="/about">About</a>
+                    <span class="techtimefor-hover-indicator"></span>
                 </li>
             </ul>
-            <div class="md:hidden">
-                <button id="menu-toggle" class="focus:outline-none">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-                    </svg>
-                </button>
+            <div class="techtimefor-menu-toggle" id="menu-toggle">
+                <svg class="techtimefor-menu-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
             </div>
         </div>
-        <div id="mobile-menu" class="hidden md:hidden space-y-4 px-4 py-6">
-            <button class="block w-full text-lg px-4 py-6 bg-gray-600 rounded-lg text-left hover:scale-1.5"><a href="/">Home</a></button>
-            <button class="block w-full text-lg px-4 py-6 bg-gray-700 rounded-lg text-left hover:bg-gray-600"><a href="/amogos">AmogOS</a></button>
-            <button class="block w-full text-lg px-4 py-6 bg-gray-700 rounded-lg text-left hover:bg-gray-600"><a href="/projects">Projects</a></button>
-            <button class="block w-full text-lg px-4 py-6 bg-gray-700 rounded-lg text-left hover:bg-gray-600"><a href="/about">About</a></button>
+        <div class="techtimefor-mobile-menu hidden" id="mobile-menu">
+            <a href="/" class="techtimefor-mobile-item active">Home</a>
+            <a href="/amogos" class="techtimefor-mobile-item">AmogOS</a>
+            <a href="/projects" class="techtimefor-mobile-item">Projects</a>
+            <a href="/about" class="techtimefor-mobile-item">About</a>
         </div>
     </nav>
 
-    <div class="container mt-24 mb-20 mx-auto px-4 py-12">
-        <h2 class="text-3xl font-bold text-center mb-4 transform transition duration-500 ease-in-outhover:blur-none blur-md opacity-0 animate-fade-in">Welcome!</h2>
-        <p class="text-center mb-8 transform transition duration-500 ease-in-out hover:blur-none blur-md opacity-0 animate-fade-in"><a href="/hmmbot.html">Legacy Page</a></p>
-</div>
+    <header class="techtimefor-hero">
+        <div class="techtimefor-hero-content">
+            <h1 class="techtimefor-fade-in">Welcome!</h1>
+            <p class="techtimefor-fade-in">Explore around here :D</p>
+            <div class="techtimefor-cta-buttons techtimefor-fade-in">
+                <a href="/amogos" class="techtimefor-cta-button primary">Discover AmogOS</a>
+                <a href="/projects" class="techtimefor-cta-button secondary">View Projects</a>
+            </div>
+        </div>
+    </header>
 
-<style>
-    @keyframes fadeIn {
-        from {
-            opacity: 0;
-            filter: blur(10px);
-        }
-        to {
-            opacity: 1;
-            filter: blur(0);
-        }
-    }
+    <section class="techtimefor-featured-section">
+        <h2 class="techtimefor-section-title techtimefor-fade-in">Featured Projects</h2>
+        <div class="techtimefor-cards-container">
+            <div class="techtimefor-card techtimefor-fade-in">
+                <div class="techtimefor-card-header">
+                    <h3>AmogOS</h3>
+                </div>
+                <div class="techtimefor-card-body">
+                    <p>A sussy linux distro that runs on any pc.</p>
+                </div>
+                <div class="techtimefor-card-footer">
+                    <a href="/amogos" class="techtimefor-card-button">Learn More</a>
+                </div>
+            </div>
+            <div class="techtimefor-card techtimefor-fade-in">
+                <div class="techtimefor-card-header">
+                    <h3>Coming Soon</h3>
+                </div>
+                <div class="techtimefor-card-body">
+                    <p>More exciting projects are in development. Stay tuned for updates!</p>
+                </div>
+                <div class="techtimefor-card-footer">
+                    <a href="/projects" class="techtimefor-card-button">View All Projects</a>
+                </div>
+            </div>
+        </div>
+    </section>
 
-    .animate-fade-in {
-        animation: fadeIn 1s ease-in-out forwards;
-    }
-</style>
+    <section class="techtimefor-support-section">
+        <h2 class="techtimefor-section-title techtimefor-fade-in">Support</h2>
+        <div class="techtimefor-support-content">
+            <p class="techtimefor-fade-in">Need help? Contact us at <a href="http://discordapp.com/users/573919264302694410">@techtimefor</a></p>
+        </div>
+    </section>
 
-<script>
-    const menuToggle = document.getElementById('menu-toggle');
-    const mobileMenu = document.getElementById('mobile-menu');
+    <footer class="techtimefor-footer">
+        <div class="techtimefor-footer-content">
+            <p><a href="/hmmbot.html">Legacy Page</a> | © 2024 techtimefor</p>
+        </div>
+    </footer>
 
+    <script>
+        const menuToggle = document.getElementById('menu-toggle');
+        const mobileMenu = document.getElementById('mobile-menu');
 
-    menuToggle.addEventListener('click', () => {
-        mobileMenu.classList.toggle('hidden');
-    });
-</script>
+        menuToggle.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+        
+        window.addEventListener('resize', () => {
+            if (window.innerWidth >= 768) { 
+                mobileMenu.classList.add('hidden');
+            }
+        });
+    </script>
 </body>
 </html>
