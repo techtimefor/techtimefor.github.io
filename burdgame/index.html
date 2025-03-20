@@ -1,0 +1,2110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no, orientation:landscape">
+    <title>Burd by techtimefor</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: 'Press Start 2P', cursive;
+            overflow: hidden;
+            transition: background-image 0.5s ease;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .container {
+            text-align: center;
+            width: 100vw;
+            height: 100vh;
+            max-width: 100%;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        #gameCanvas {
+            background-color: rgba(173, 216, 230, 0.7);
+            border: none;
+            display: block;
+            width: 100%;
+            height: 100%;
+            max-width: 100%;
+            max-height: 100%;
+        }
+
+        #startButton, #restartButton, #shopButton {
+            padding: 0;
+            width: 60px;
+            height: 60px;
+            font-size: 1rem;
+            cursor: pointer;
+            margin-top: 15px;
+            font-family: 'Press Start 2P', cursive;
+            background-color: #FFD700;
+            color: #000;
+            border: 2px solid #000;
+            border-radius: 50%;
+            transition: background-color 0.3s ease;
+            display: none;
+            z-index: 10;
+            position: absolute;
+            text-align: center;
+            line-height: 60px;
+            opacity: 0.8;
+            backdrop-filter: blur(5px);
+        }
+
+        #startButton {
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        #restartButton {
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        #shopButton {
+            bottom: 20px;
+            right: 20px;
+            display: none;
+        }
+
+        #startButton:hover, #restartButton:hover, #shopButton:hover {
+            background-color: #FFDB58;
+            opacity: 1;
+        }
+
+        #startButton::before {
+            content: '▶';
+            font-size: 2rem;
+            display: block;
+            line-height: 60px;
+        }
+
+        #restartButton::before {
+            content: '🔄';
+            font-size: 2rem;
+            display: block;
+            line-height: 60px;
+        }
+
+        #shopButton::before {
+            content: '🛒';
+            font-size: 2rem;
+            display: block;
+            line-height: 60px;
+        }
+
+        #message {
+            position: absolute;
+            color: #000;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 1.5rem;
+            text-align: center;
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            display: none;
+            z-index: 10;
+        }
+
+        #scoreDisplay {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 1rem;
+            color: #000;
+            z-index: 10;
+            background-color: rgba(255, 255, 255, 0.7);
+            padding: 5px 10px;
+            border-radius: 5px;
+            backdrop-filter: blur(5px);
+        }
+
+        .game-over-overlay {
+            position: absolute;
+            inset: 0;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 11;
+            backdrop-filter: blur(10px);
+        }
+
+        .game-over-content {
+            text-align: center;
+            padding: 20px;
+            border-radius: 10px;
+            border: 4px solid #fff;
+            background-color: #f00;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .game-over-title {
+            font-size: 2rem;
+            color: #fff;
+            margin-bottom: 1rem;
+        }
+
+        .game-over-score {
+            font-size: 1.2rem;
+            color: #fff;
+            margin-bottom: 1.5rem;
+        }
+
+        #restartButtonOverlay {
+            padding: 0.5rem 1rem;
+            font-size: 0.8rem;
+            font-family: 'Press Start 2P', cursive;
+            background-color: #fff;
+            color: #f00;
+            border: 2px solid #000;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 0;
+        }
+
+        .score-and-button {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        #dayDisplay {
+            position: absolute;
+            top: 50px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 1rem;
+            color: #000;
+            z-index: 10;
+            background-color: rgba(255, 255, 255, 0.7);
+            padding: 5px 10px;
+            border-radius: 5px;
+            backdrop-filter: blur(5px);
+        }
+
+        #coinDisplay {
+            position: absolute;
+            top: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 1rem;
+            color: #000;
+            z-index: 10;
+            background-color: rgba(255, 215, 0, 0.7);
+            padding: 5px 10px;
+            border-radius: 5px;
+            backdrop-filter: blur(5px);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            border: 2px solid #000;
+        }
+
+        #coinDisplay img {
+            width: 20px;
+            height: 20px;
+            display: inline-block;
+        }
+
+        .shop-panel {
+            position: absolute;
+            top: 0;
+            right: -300px; 
+            width: 280px;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.85);
+            color: white;
+            padding: 20px;
+            transition: right 0.3s ease;
+            z-index: 20;
+            overflow-y: auto;
+            font-family: 'Press Start 2P', cursive;
+            border-left: 4px solid gold;
+            backdrop-filter: blur(10px);
+        }
+
+        .shop-panel.open {
+            right: 0;
+        }
+
+        .shop-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            border-bottom: 2px solid gold;
+            padding-bottom: 10px;
+        }
+
+        .shop-title {
+            font-size: 1.2rem;
+            color: gold;
+        }
+
+        .close-shop {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .shop-section {
+            margin-bottom: 20px;
+        }
+
+        .shop-section-title {
+            font-size: 0.9rem;
+            color: gold;
+            margin-bottom: 10px;
+            border-bottom: 1px solid rgba(255, 215, 0, 0.3);
+            padding-bottom: 5px;
+        }
+
+        .shop-items {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+
+        .shop-item {
+            background-color: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 215, 0, 0.5);
+            border-radius: 5px;
+            padding: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .shop-item:hover {
+            background-color: rgba(255, 215, 0, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .shop-item.selected {
+            background-color: rgba(255, 215, 0, 0.4);
+            border: 2px solid gold;
+        }
+
+        .shop-item-icon {
+            font-size: 2rem;
+            margin-bottom: 5px;
+        }
+
+        .shop-item-name {
+            font-size: 0.6rem;
+            margin-bottom: 5px;
+        }
+
+        .shop-item-price {
+            font-size: 0.7rem;
+            color: gold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+        }
+
+        .shop-item-price img {
+            width: 15px;
+            height: 15px;
+        }
+
+        .backgrounds-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 10px;
+        }
+
+        .background-item {
+            position: relative;
+            height: 80px;
+            border-radius: 5px;
+            overflow: hidden;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: all 0.2s ease;
+        }
+
+        .background-item:hover {
+            transform: translateY(-2px);
+        }
+
+        .background-item.selected {
+            border: 2px solid gold;
+        }
+
+        .background-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .background-item-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 5px;
+            font-size: 0.6rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .coin-price {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(145deg, #ffd700, #ffaa00);
+            border-radius: 50%;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+            color: #000;
+            font-weight: bold;
+            border: 2px solid #fff;
+        }
+
+        .title-screen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 15;
+        }
+
+        .title-content {
+            text-align: center;
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 20px 40px;
+            border-radius: 10px;
+            border: 4px solid gold;
+            max-width: 80%;
+        }
+
+        .game-title {
+            font-size: 4rem;
+            color: gold;
+            text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.5);
+            margin-bottom: 20px;
+        }
+
+        .title-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .title-button {
+            padding: 12px 24px;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 1rem;
+            background-color: gold;
+            color: #000;
+            border: 3px solid #fff;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .title-button:hover {
+            transform: scale(1.05);
+            background-color: #ffe066;
+        }
+
+        .stats-panel {
+            position: absolute;
+            top: 0;
+            left: -300px;
+            width: 280px;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.85);
+            color: white;
+            padding: 20px;
+            transition: left 0.3s ease;
+            z-index: 20;
+            overflow-y: auto;
+            font-family: 'Press Start 2P', cursive;
+            border-right: 4px solid gold;
+            backdrop-filter: blur(10px);
+        }
+
+        .stats-panel.open {
+            left: 0;
+        }
+
+        .stats-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            border-bottom: 2px solid gold;
+            padding-bottom: 10px;
+        }
+
+        .stats-title {
+            font-size: 1.2rem;
+            color: gold;
+        }
+
+        .close-stats {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .stats-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .stat-item {
+            background-color: rgba(255, 255, 255, 0.1);
+            border: 1px solid gold;
+            border-radius: 5px;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .stat-name {
+            font-size: 0.7rem;
+        }
+
+        .stat-value {
+            font-size: 0.8rem;
+            color: gold;
+        }
+
+        #restartButton::before {
+            content: attr(data-text);
+            font-size: 0.7rem;
+            display: block;
+            line-height: normal;
+            margin-top: 18px;
+        }
+
+        #statsButton {
+            padding: 0;
+            width: 60px;
+            height: 60px;
+            font-size: 1rem;
+            cursor: pointer;
+            margin-top: 15px;
+            font-family: 'Press Start 2P', cursive;
+            background-color: #FFD700;
+            color: #000;
+            border: 2px solid #000;
+            border-radius: 50%;
+            transition: background-color 0.3s ease;
+            bottom: 20px;
+            left: 20px;
+            display: none;
+            position: absolute;
+            text-align: center;
+            line-height: 60px;
+            opacity: 0.8;
+            backdrop-filter: blur(5px);
+            z-index: 10;
+        }
+
+        #statsButton:hover {
+            background-color: #FFDB58;
+            opacity: 1;
+        }
+
+        #statsButton::before {
+            content: '📊';
+            font-size: 2rem;
+            display: block;
+            line-height: 60px;
+        }
+
+        .revive-button {
+            padding: 0.5rem 1rem;
+            font-size: 0.8rem;
+            font-family: 'Press Start 2P', cursive;
+            background-color: gold;
+            color: #000;
+            border: 2px solid #fff;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+        }
+
+        .revive-button:hover {
+            background-color: #ffe066;
+        }
+
+        .revive-button img {
+            width: 20px;
+            height: 20px;
+        }
+
+        .revive-button:disabled {
+            background-color: #cccccc;
+            color: #666666;
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+
+        .game-over-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        .or-divider {
+            position: relative;
+            margin: 10px 0;
+            text-align: center;
+            color: #fff;
+            font-size: 0.7rem;
+        }
+
+        .or-divider::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 40%;
+            height: 1px;
+            background-color: rgba(255,255,255,0.5);
+        }
+
+        .or-divider::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            right: 0;
+            width: 40%;
+            height: 1px;
+            background-color: rgba(255,255,255,0.5);
+        }
+
+        .main-menu-button {
+            padding: 0.5rem 1rem;
+            font-size: 0.8rem;
+            font-family: 'Press Start 2P', cursive;
+            background-color: #4a90e2;
+            color: #fff;
+            border: 2px solid #fff;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .main-menu-button:hover {
+            background-color: #3a80d2;
+        }
+
+        .shop-coin-balance {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background-color: rgba(255, 215, 0, 0.8);
+            padding: 8px 12px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            border: 2px solid white;
+            font-size: 0.8rem;
+            z-index: 25;
+        }
+
+        .shop-coin-balance img {
+            width: 20px;
+            height: 20px;
+        }
+
+        .copyright {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.6rem;
+            color: rgba(255, 255, 255, 0.7);
+            text-align: center;
+            z-index: 5;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+            opacity: 0; /* Hide by default */
+            transition: opacity 0.5s ease;
+        }
+
+        .shop-item.purchased .shop-item-price {
+            background-color: transparent;
+            border: none;
+        }
+
+        .owned-text {
+            color: #00ff00;
+            font-weight: bold;
+        }
+
+        .background-item.unlocked .coin-price {
+            background: linear-gradient(145deg, #00aa00, #00ff00);
+        }
+
+        .game-over-total-coins {
+            font-size: 1.2rem;
+            color: #fff;
+            margin-bottom: 0.5rem;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            50% { transform: translateX(5px); }
+            75% { transform: translateX(-5px); }
+        }
+
+        .shake {
+            animation: shake 0.5s;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <canvas id="gameCanvas"></canvas>
+        <button id="startButton"></button>
+        <button id="restartButton" data-text="PLAY AGAIN"></button>
+        <button id="shopButton"></button>
+        <button id="statsButton"></button>
+        <div id="scoreDisplay">Score: 0</div>
+        <div id="message"></div>
+        <div class="game-over-overlay">
+            <div class="game-over-content">
+                <h2 class="game-over-title">Game Over</h2>
+                <p class="game-over-score">Final Score: <span id="finalScore">0</span></p>
+                <p class="game-over-best">Best Score: <span id="bestScore">0</span></p>
+                <p class="game-over-coins">Coins This Run: <span id="finalCoins">0</span></p>
+                <p class="game-over-total-coins">Total Coins: <span id="totalCoins">0</span></p>
+                <div class="game-over-buttons">
+                    <button id="reviveButton" class="revive-button">
+                        <img src="https://cdn.pixabay.com/photo/2016/11/30/21/55/coin-1873955_1280.png" alt="Coin">
+                        <span>Revive for 1000</span>
+                    </button>
+                    <div class="or-divider">OR</div>
+                    <button id="restartButtonOverlay">PLAY AGAIN</button>
+                    <button id="mainMenuButton" class="main-menu-button">MAIN MENU</button>
+                </div>
+            </div>
+        </div>
+        <div id="dayDisplay">Day: 1</div>
+        <div id="coinDisplay">
+            <img src="https://cdn.pixabay.com/photo/2016/11/30/21/55/coin-1873955_1280.png" alt="Coin">
+            <span>0</span>
+        </div>
+        
+        <div class="title-screen">
+            <div class="title-content">
+                <h1 class="game-title">BURD</h1>
+                <div class="title-buttons">
+                    <button class="title-button" id="playButton">PLAY</button>
+                    <button class="title-button" id="shopTitleButton">SHOP</button>
+                    <button class="title-button" id="statsTitleButton">STATS</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="stats-panel">
+            <div class="stats-header">
+                <div class="stats-title">STATS</div>
+                <button class="close-stats">×</button>
+            </div>
+            <div class="stats-list">
+                <div class="stat-item">
+                    <div class="stat-name">Best Score</div>
+                    <div class="stat-value" id="statBestScore">0</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-name">Total Coins</div>
+                    <div class="stat-value" id="statTotalCoins">0</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-name">Games Played</div>
+                    <div class="stat-value" id="statGamesPlayed">0</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-name">Total Deaths</div>
+                    <div class="stat-value" id="statTotalDeaths">0</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-name">Total Days</div>
+                    <div class="stat-value" id="statTotalDays">0</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-name">Obstacles Passed</div>
+                    <div class="stat-value" id="statObstaclesPassed">0</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-name">Time Played</div>
+                    <div class="stat-value" id="statTimePlayed">0m</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="shop-panel">
+            <div class="shop-coin-balance">
+                <img src="https://cdn.pixabay.com/photo/2016/11/30/21/55/coin-1873955_1280.png" alt="Coin">
+                <span id="shopCoinBalance">0</span>
+            </div>
+            <div class="shop-header">
+                <div class="shop-title">SHOP</div>
+                <button class="close-shop">×</button>
+            </div>
+            
+            <div class="shop-section">
+                <div class="shop-section-title">BOOSTS</div>
+                <div class="shop-items">
+                    <div class="shop-item" data-boost="shield">
+                        <div class="shop-item-icon">🛡️</div>
+                        <div class="shop-item-name">Shield</div>
+                        <div class="shop-item-price">
+                            <img src="https://cdn.pixabay.com/photo/2016/11/30/21/55/coin-1873955_1280.png" alt="Coin">
+                            <span>50</span>
+                        </div>
+                    </div>
+                    <div class="shop-item" data-boost="magnet">
+                        <div class="shop-item-icon">🧲</div>
+                        <div class="shop-item-name">Coin Magnet</div>
+                        <div class="shop-item-price">
+                            <img src="https://cdn.pixabay.com/photo/2016/11/30/21/55/coin-1873955_1280.png" alt="Coin">
+                            <span>30</span>
+                        </div>
+                    </div>
+                    <div class="shop-item" data-boost="slow">
+                        <div class="shop-item-icon">⏱️</div>
+                        <div class="shop-item-name">Slow Time</div>
+                        <div class="shop-item-price">
+                            <img src="https://cdn.pixabay.com/photo/2016/11/30/21/55/coin-1873955_1280.png" alt="Coin">
+                            <span>40</span>
+                        </div>
+                    </div>
+                    <div class="shop-item" data-boost="double">
+                        <div class="shop-item-icon">✖️2</div>
+                        <div class="shop-item-name">Double Coins</div>
+                        <div class="shop-item-price">
+                            <img src="https://cdn.pixabay.com/photo/2016/11/30/21/55/coin-1873955_1280.png" alt="Coin">
+                            <span>60</span>
+                        </div>
+                    </div>
+                    <div class="shop-item" data-boost="shrink">
+                        <div class="shop-item-icon">📏</div>
+                        <div class="shop-item-name">Shrink Ray</div>
+                        <div class="shop-item-price">
+                            <img src="https://cdn.pixabay.com/photo/2016/11/30/21/55/coin-1873955_1280.png" alt="Coin">
+                            <span>70</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="shop-section">
+                <div class="shop-section-title">BACKGROUNDS</div>
+                <div class="backgrounds-grid">
+                    <div class="background-item selected" data-bg="default">
+                        <img src="https://images.unsplash.com/photo-1468649437954-f86751c119b6?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Default">
+                        <div class="background-item-overlay">
+                            <span>Default</span>
+                            <span>Free</span>
+                        </div>
+                    </div>
+                    <div class="background-item" data-bg="mountains" data-price="100">
+                        <img src="https://images.unsplash.com/photo-1521457094297-24c9552f6832?q=80&w=1758&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Mountains">
+                        <div class="background-item-overlay">
+                            <span>Mountains</span>
+                            <div class="coin-price">10</div>
+                        </div>
+                    </div>
+                    <div class="background-item" data-bg="city" data-price="150">
+                        <img src="https://images.unsplash.com/photo-1615915613340-17e548756e88?q=80&w=1700&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="City">
+                        <div class="background-item-overlay">
+                            <span>City</span>
+                            <div class="coin-price">15</div>
+                        </div>
+                    </div>
+                    <div class="background-item" data-bg="space" data-price="200">
+                        <img src="https://images.unsplash.com/photo-1559758828-0f38569db298?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Space">
+                        <div class="background-item-overlay">
+                            <span>Space</span>
+                            <div class="coin-price">20</div>
+                        </div>
+                    </div>
+                    <div class="background-item" data-bg="beach" data-price="250">
+                        <img src="https://images.unsplash.com/photo-1594111386519-b59043ef251b?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Beach">
+                        <div class="background-item-overlay">
+                            <span>Beach</span>
+                            <div class="coin-price">25</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="copyright">© techtimefor 2028</div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        const startButton = document.getElementById('startButton');
+        const restartButton = document.getElementById('restartButton');
+        const shopButton = document.getElementById('shopButton');
+        const messageElement = document.getElementById('message');
+        const scoreDisplay = document.getElementById('scoreDisplay');
+        const gameOverOverlay = document.querySelector('.game-over-overlay');
+        const finalScoreDisplay = document.getElementById('finalScore');
+        const restartButtonOverlay = document.getElementById('restartButtonOverlay');
+        const dayDisplay = document.getElementById('dayDisplay');
+        const coinDisplay = document.getElementById('coinDisplay');
+        const coinImageElement = coinDisplay.querySelector('img');
+        const coinCountSpan = coinDisplay.querySelector('span');
+        const shopPanel = document.querySelector('.shop-panel');
+        const closeShopButton = document.querySelector('.close-shop');
+        const shopItems = document.querySelectorAll('.shop-item');
+        const backgroundItems = document.querySelectorAll('.background-item');
+
+        let birdX, birdY, birdRadius;
+        let birdSpeedY;
+        let gravity;
+        let obstacleSize;
+        let obstacleGap;
+        let obstacles = [];
+        let score;
+        let gamePlaying;
+        let animationId;
+        let initialObstacleX;
+        let gameSpeed;
+        let scoredObstacleIndex;
+        let obstacleGenerationInterval;
+        let birdImage = new Image();
+        let flapSound = new Audio('https://cdn.pixabay.com/download/audio/2022/03/26/audio_515cd38fa2.mp3?filename=slow-wind-sound-effect-108401.mp3');
+        let loseSound = new Audio('https://cdn.pixabay.com/download/audio/2021/08/09/audio_e00c3caecf.mp3?filename=bruh-sound-effect-1-6970.mp3');
+        let dayCounter = 1;
+        let coins = 0;
+        let isDay = true;
+        let dayNightCycleSpeed = 0.0005;
+        let backgroundCycleValue = 0;
+        let previousScore = 0;
+        let backgroundImage = new Image();
+        let backgroundX = 0;
+        let backgroundSpeed = 0.1;
+        let sunsetColors = [
+            "rgba(255, 248, 220, 0.2)",
+            "rgba(255, 235, 205, 0.3)",
+            "rgba(255, 228, 181, 0.4)",
+            "rgba(255, 218, 185, 0.5)",
+            "rgba(255, 160, 122, 0.6)",
+            "rgba(255, 127, 80, 0.7)",
+            "rgba(255, 99, 71, 0.8)",
+            "rgba(255, 69, 0, 0.9)",
+            "rgba(255, 20, 147, 0.95)",
+            "rgba(199, 21, 133, 1)",
+        ];
+        let sunriseColors = [
+            "rgba(199, 21, 133, 1)",
+            "rgba(255, 69, 0, 0.9)",
+            "rgba(255, 99, 71, 0.8)",
+            "rgba(255, 127, 80, 0.7)",
+            "rgba(255, 160, 122, 0.6)",
+            "rgba(255, 218, 185, 0.5)",
+            "rgba(255, 228, 181, 0.4)",
+            "rgba(255, 235, 205, 0.3)",
+            "rgba(255, 248, 220, 0.2)",
+            "rgba(255, 255, 255, 0)",
+        ];
+        let nightColors = [
+            "rgba(0, 0, 50, 0.9)",
+            "rgba(0, 0, 100, 0.8)",
+            "rgba(0, 0, 150, 0.7)",
+            "rgba(0, 0, 200, 0.6)",
+            "rgba(0, 0, 250, 0.5)",
+            "rgba(0, 50, 250, 0.4)",
+            "rgba(0, 100, 250, 0.3)",
+            "rgba(0, 150, 250, 0.2)",
+            "rgba(0, 200, 250, 0.1)",
+            "rgba(0, 250, 250, 0)",
+        ];
+        let dayColors = [
+            "rgba(0, 250, 250, 0)",
+            "rgba(0, 200, 250, 0.1)",
+            "rgba(0, 150, 250, 0.2)",
+            "rgba(0, 100, 250, 0.3)",
+            "rgba(0, 50, 250, 0.4)",
+            "rgba(0, 0, 250, 0.5)",
+            "rgba(0, 0, 200, 0.6)",
+            "rgba(0, 0, 150, 0.7)",
+            "rgba(0, 0, 100, 0.8)",
+            "rgba(0, 0, 50, 0.9)",
+        ];
+        let currentColorPalette = dayColors;
+        let dayCompleted = false;
+        let coinSound = new Audio('https://cdn.pixabay.com/download/audio/2022/03/10/audio_614a5486d4.mp3?filename=coin-47904.mp3');
+        let collectingCoins = []; 
+        
+        let activeBoosts = {
+            shield: false,
+            magnet: false,
+            slow: false,
+            double: false,
+            shrink: false
+        };
+        
+        let unlockedBackgrounds = ['default'];
+        let currentBackground = 'default';
+        let backgroundImages = {
+            default: 'https://images.unsplash.com/photo-1468649437954-f86751c119b6?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+            mountains: 'https://images.unsplash.com/photo-1521457094297-24c9552f6832?q=80&w=1758&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+            city: 'https://images.unsplash.com/photo-1615915613340-17e548756e88?q=80&w=1700&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+            space: 'https://images.unsplash.com/photo-1559758828-0f38569db298?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+            beach: 'https://images.unsplash.com/photo-1594111386519-b59043ef251b?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
+        };
+        
+        let boostPrices = {
+            shield: 50,
+            magnet: 30,
+            slow: 40,
+            double: 60,
+            shrink: 70
+        };
+        
+        let backgroundPrices = {
+            default: 0,
+            mountains: 100,
+            city: 150,
+            space: 200,
+            beach: 250
+        };
+
+        birdImage.src = 'https://techtimefor.github.io/images/burd.png';
+
+        let isMobile = false;
+        let mobileSizeMultiplier = 1.5; 
+
+        function detectMobile() {
+            return (
+                window.innerWidth <= 768 || // Common mobile width threshold
+                /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
+            );
+        }
+
+        function updateSizesForDevice() {
+            isMobile = detectMobile();
+            
+            if (isMobile) {
+                birdRadius = 20 * mobileSizeMultiplier;
+                obstacleSize = 50 * mobileSizeMultiplier;
+                gravity = 0.6 * mobileSizeMultiplier;
+                jumpStrength = 12 * mobileSizeMultiplier;
+            } else {
+                birdRadius = 20;
+                obstacleSize = 50;
+                gravity = 0.6;
+                jumpStrength = 12;
+            }
+        }
+
+        function setCanvasSize() {
+            const containerElement = document.querySelector('.container');
+            const width = containerElement.clientWidth;
+            const height = containerElement.clientHeight;
+
+            const isLandscape = window.innerWidth > window.innerHeight;
+            console.log("isLandscape:", isLandscape);
+
+            canvas.width = width;
+            canvas.height = height;
+
+        }
+
+        setCanvasSize();
+
+        window.addEventListener('resize', () => {
+            setCanvasSize();
+            initGame();
+        });
+
+        function initGame() {
+            const currentCoins = coins; 
+            
+            updateSizesForDevice();
+            
+            birdX = canvas.width / 3;
+            birdY = canvas.height / 2;
+            birdSpeedY = 0;
+            gravity = 0.8;
+            obstacleSize = canvas.width / 15;
+            obstacleGap = canvas.height / 3;
+            obstacles = [];
+            score = 0;
+            gamePlaying = false;
+            scoredObstacleIndex = -1;
+            initialObstacleX = canvas.width + obstacleSize;
+            gameSpeed = 2;
+            scoreDisplay.textContent = `Score: ${score}`;
+            gameOverOverlay.style.display = 'none';
+            restartButton.style.display = 'none';
+            startButton.style.display = 'block';
+            messageElement.textContent = "Press Start Button or Tap to Play";
+            messageElement.style.display = 'block';
+            if (animationId) cancelAnimationFrame(animationId);
+            obstacles.push({
+                x: initialObstacleX,
+                y: canvas.height / 2,
+                passed: false,
+                shape: Math.floor(Math.random() * 4),
+                hasCoin: true
+            });
+            clearInterval(obstacleGenerationInterval);
+            birdImage.onload = () => {
+                if (!gamePlaying) {
+                    drawBird();
+                }
+            };
+            dayCounter = 1;
+            coins = 0;
+            isDay = true;
+            backgroundCycleValue = 0;
+            previousScore = 0;
+            backgroundX = 0;
+            dayCompleted = false;
+            updateDayNightBackground();
+            dayDisplay.textContent = `Day: ${dayCounter}`;
+            coinCountSpan.textContent = `${coins}`;
+            coinDisplay.style.display = 'flex';
+            collectingCoins = []; 
+            
+            shopButton.style.display = 'block';
+            
+            backgroundImage = new Image();
+            backgroundImage.src = backgroundImages[currentBackground];
+
+            if (!isDemo) {
+                startButton.style.display = 'block';
+                shopButton.style.display = 'block';
+                statsButton.style.display = 'block'; 
+            } else {
+                startButton.style.display = 'none';
+                restartButton.style.display = 'none';
+                shopButton.style.display = 'none';
+                statsButton.style.display = 'none';
+            }
+
+            updateShopCoinBalance();
+            
+            coins = currentCoins;
+            coinCountSpan.textContent = coins;
+            updateShopCoinBalance();
+        }
+
+        function drawBird() {
+            const sizeMultiplier = activeBoosts.shrink ? 0.6 : 1;
+            const renderRadius = birdRadius * sizeMultiplier;
+            
+            ctx.drawImage(birdImage, 
+                birdX - renderRadius, 
+                birdY - renderRadius, 
+                renderRadius * 2, 
+                renderRadius * 2);
+            
+            if (activeBoosts.shield) {
+                ctx.save();
+                ctx.strokeStyle = 'rgba(0, 255, 255, 0.7)';
+                ctx.lineWidth = isMobile ? 4 : 3; 
+                ctx.beginPath();
+                ctx.arc(birdX, birdY, renderRadius * 1.5, 0, Math.PI * 2);
+                ctx.stroke();
+                
+                const pulseSize = 1.5 + Math.sin(Date.now() * 0.01) * 0.1;
+                ctx.strokeStyle = 'rgba(0, 255, 255, 0.3)';
+                ctx.beginPath();
+                ctx.arc(birdX, birdY, renderRadius * pulseSize, 0, Math.PI * 2);
+                ctx.stroke();
+                ctx.restore();
+            }
+            
+            if (activeBoosts.magnet) {
+                ctx.save();
+                ctx.strokeStyle = 'rgba(255, 0, 255, 0.7)';
+                ctx.lineWidth = isMobile ? 3 : 2; 
+                ctx.setLineDash([5, 5]);
+                ctx.beginPath();
+                ctx.arc(birdX, birdY, renderRadius * 3, 0, Math.PI * 2);
+                ctx.stroke();
+                ctx.restore();
+            }
+            
+            if (activeBoosts.double) {
+                ctx.save();
+                ctx.fillStyle = 'rgba(255, 215, 0, 0.7)';
+                ctx.font = isMobile ? '24px Arial' : '20px Arial'; 
+                ctx.textAlign = 'center';
+                ctx.fillText('×2', birdX, birdY - renderRadius * 1.5);
+                ctx.restore();
+            }
+            
+            if (activeBoosts.shrink) {
+                ctx.save();
+                ctx.strokeStyle = 'rgba(255, 0, 255, 0.5)';
+                ctx.lineWidth = isMobile ? 3 : 2;
+                ctx.setLineDash([2, 2]);
+                ctx.beginPath();
+                ctx.arc(birdX, birdY, renderRadius * 1.2, 0, Math.PI * 2);
+                ctx.stroke();
+                ctx.restore();
+            }
+        }
+
+        function drawObstacles() {
+            obstacles.forEach(obstacle => {
+                ctx.fillStyle = 'green';
+                ctx.strokeStyle = 'black';
+                ctx.lineWidth = isMobile ? 3 : 2; 
+                
+                if (obstacle.shape === 0) { 
+                ctx.beginPath();
+                    ctx.rect(obstacle.x, obstacle.y, obstacleSize, obstacleSize);
+                    ctx.fill();
+                    ctx.stroke();
+                } else if (obstacle.shape === 1) { 
+                    ctx.beginPath();
+                    ctx.ellipse(
+                        obstacle.x + obstacleSize/2, 
+                        obstacle.y + obstacleSize/2, 
+                        obstacleSize/2, 
+                        obstacleSize/2, 
+                        0, 0, Math.PI * 2
+                    );
+                    ctx.fill();
+                    ctx.stroke();
+                } else if (obstacle.shape === 2) { 
+                    ctx.beginPath();
+                    ctx.moveTo(obstacle.x, obstacle.y);
+                    ctx.lineTo(obstacle.x + obstacleSize, obstacle.y);
+                    ctx.lineTo(obstacle.x + obstacleSize/2, obstacle.y + obstacleSize);
+                    ctx.closePath();
+                    ctx.fill();
+                    ctx.stroke();
+                } else if (obstacle.shape === 3) { 
+                    ctx.beginPath();
+                    ctx.rect(obstacle.x, obstacle.y, obstacleSize * 1.5, obstacleSize * 0.8);
+                    ctx.fill();
+                    ctx.stroke();
+                }
+
+                if (!obstacle.passed && obstacle.hasCoin) {
+                    ctx.save();
+                    ctx.fillStyle = 'gold';
+                    ctx.strokeStyle = 'black';
+                ctx.beginPath();
+                    const coinX = obstacle.x + obstacleSize/2;
+                    const coinY = obstacle.y - obstacleSize;
+                    ctx.arc(coinX, coinY, obstacleSize/4, 0, Math.PI * 2);
+                    ctx.fill();
+                    ctx.stroke();
+                    ctx.restore();
+                    
+                    obstacle.coinX = coinX;
+                    obstacle.coinY = coinY;
+                }
+            });
+            
+            drawCollectingCoins();
+        }
+        
+        function drawCollectingCoins() {
+            for (let i = 0; i < collectingCoins.length; i++) {
+                const coin = collectingCoins[i];
+                
+                ctx.save();
+                ctx.globalAlpha = 1 - coin.frame/10;
+                ctx.fillStyle = 'gold';
+                ctx.strokeStyle = 'black';
+                
+                const baseSize = isMobile ? obstacleSize/3 : obstacleSize/4;
+                const growFactor = 1 + coin.frame/5;
+                ctx.beginPath();
+                ctx.arc(coin.x, coin.y, baseSize * growFactor, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.stroke();
+                
+                ctx.fillStyle = 'white';
+                ctx.font = isMobile ? '24px "Press Start 2P"' : '20px "Press Start 2P"';
+                ctx.textAlign = 'center';
+                ctx.fillText(`+${coin.value || 1}`, coin.x, coin.y - coin.frame*2);
+                
+                ctx.restore();
+                
+                coin.frame++;
+                
+                if (coin.frame >= 10) {
+                    collectingCoins.splice(i, 1);
+                    i--;
+                }
+            }
+        }
+
+        function updateBird() {
+            birdSpeedY += gravity;
+            birdY += birdSpeedY;
+
+            if (birdY < 0 || birdY > canvas.height) {
+                endGame();
+            }
+        }
+
+        function updateObstacles() {
+            for (let i = 0; i < obstacles.length; i++) {
+                obstacles[i].x -= gameSpeed;
+
+                if (obstacles[i].x + obstacleSize < 0) {
+                    obstacles.shift();
+                }
+            }
+        }
+
+        function checkCollision() {
+            for (let i = 0; i < obstacles.length; i++) {
+                const obstacle = obstacles[i];
+                
+                const birdLeft = birdX - birdRadius * (activeBoosts.shrink ? 0.6 : 1);
+                const birdRight = birdX + birdRadius * (activeBoosts.shrink ? 0.6 : 1);
+                const birdTop = birdY - birdRadius * (activeBoosts.shrink ? 0.6 : 1);
+                const birdBottom = birdY + birdRadius * (activeBoosts.shrink ? 0.6 : 1);
+                
+                let obstacleLeft = obstacle.x;
+                let obstacleRight, obstacleTop, obstacleBottom;
+                
+                if (obstacle.shape === 0) {
+                    obstacleRight = obstacle.x + obstacleSize;
+                    obstacleTop = obstacle.y;
+                    obstacleBottom = obstacle.y + obstacleSize;
+                } else if (obstacle.shape === 1) { 
+                    obstacleRight = obstacle.x + obstacleSize;
+                    obstacleTop = obstacle.y;
+                    obstacleBottom = obstacle.y + obstacleSize;
+                } else if (obstacle.shape === 2) { 
+                    obstacleRight = obstacle.x + obstacleSize;
+                    obstacleTop = obstacle.y;
+                    obstacleBottom = obstacle.y + obstacleSize;
+                } else {
+                    obstacleRight = obstacle.x + obstacleSize * 1.5;
+                    obstacleTop = obstacle.y;
+                    obstacleBottom = obstacle.y + obstacleSize * 0.8;
+                }
+                
+                if (!activeBoosts.shield && 
+                    birdRight > obstacleLeft && birdLeft < obstacleRight &&
+                    birdBottom > obstacleTop && birdTop < obstacleBottom) {
+                        return true;
+                    }
+                
+                if (obstacle.hasCoin && !obstacle.passed) {
+                    let detectionRadius = birdRadius + obstacleSize/4;
+                    
+                    if (activeBoosts.magnet) {
+                        detectionRadius *= 3;
+                    }
+                    
+                    if (isMobile) {
+                        detectionRadius *= 1.2;
+                    }
+                    
+                    const distX = birdX - obstacle.coinX;
+                    const distY = birdY - obstacle.coinY;
+                    const distance = Math.sqrt(distX*distX + distY*distY);
+                    
+                    if (distance < detectionRadius) {
+                        const coinValue = activeBoosts.double ? 2 : 1;
+                        coins += coinValue;
+                        sessionCoins += coinValue; 
+                        coinCountSpan.textContent = `${coins}`;
+                        obstacle.hasCoin = false;
+                        coinSound.currentTime = 0;
+                        coinSound.play();
+                        
+                        collectingCoins.push({
+                            x: obstacle.coinX,
+                            y: obstacle.coinY,
+                            frame: 0,
+                            value: coinValue
+                        });
+
+                        updateShopCoinBalance();
+                    }
+                }
+            }
+            return false;
+        }
+
+        function updateScore() {
+            for (let i = 0; i < obstacles.length; i++) {
+                const obstacle = obstacles[i];
+                const birdXCenter = birdX;
+
+                if (birdXCenter > obstacle.x + obstacleSize && !obstacle.passed) {
+                    score++;
+                    obstacle.passed = true;
+                    scoredObstacleIndex = i;
+                    scoreDisplay.textContent = `Score: ${score}`;
+                }
+            }
+        }
+
+        function drawParallaxBackground() {
+            backgroundX -= backgroundSpeed;
+            if (backgroundX <= -backgroundImage.width) {
+                backgroundX = 0;
+            }
+            ctx.drawImage(backgroundImage, backgroundX, 0, backgroundImage.width, canvas.height);
+            ctx.drawImage(backgroundImage, backgroundX + backgroundImage.width, 0, backgroundImage.width, canvas.height);
+        }
+
+        function updateDayNightBackground() {
+            backgroundCycleValue += dayNightCycleSpeed;
+            
+            if (backgroundCycleValue < 0.2) {
+                currentColorPalette = sunriseColors;
+                let colorIndex = Math.floor((backgroundCycleValue / 0.2) * sunriseColors.length);
+                colorIndex = Math.min(colorIndex, sunriseColors.length - 1);
+                currentColor = sunriseColors[colorIndex];
+            } else if (backgroundCycleValue < 0.4) {
+                    currentColorPalette = dayColors;
+                currentColor = "rgba(255, 255, 255, 0)"; 
+            } else if (backgroundCycleValue < 0.6) {
+                let colorIndex = Math.floor(((backgroundCycleValue - 0.4) / 0.2) * sunsetColors.length);
+                colorIndex = Math.min(colorIndex, sunsetColors.length - 1);
+                currentColor = sunsetColors[colorIndex];
+            } else if (backgroundCycleValue < 0.8) {
+                currentColorPalette = sunsetColors;
+                let colorIndex = Math.floor(((backgroundCycleValue - 0.6) / 0.2) * sunsetColors.length);
+                colorIndex = Math.min(colorIndex, sunsetColors.length - 1);
+                currentColor = sunsetColors[colorIndex];
+            } else {
+                    currentColorPalette = nightColors;
+                let colorIndex = Math.floor(((backgroundCycleValue - 0.8) / 0.2) * nightColors.length);
+                colorIndex = Math.min(colorIndex, nightColors.length - 1);
+                currentColor = nightColors[colorIndex];
+                }
+            
+            isDay = (backgroundCycleValue < 0.6);
+            
+            if (backgroundCycleValue >= 1) {
+                backgroundCycleValue = 0;
+                dayCompleted = true;
+            }
+            
+            ctx.save();
+            ctx.globalCompositeOperation = 'multiply';
+            ctx.fillStyle = currentColor;
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.restore();
+            
+            if (!isDay) {
+                drawStars();
+            }
+            
+            drawCelestialBody();
+        }
+        
+        function drawStars() {
+            ctx.save();
+            ctx.fillStyle = 'white';
+            
+            if (!window.stars) {
+                window.stars = [];
+                for (let i = 0; i < 100; i++) {
+                    stars.push({
+                        x: Math.random() * canvas.width,
+                        y: Math.random() * canvas.height / 2,
+                        size: Math.random() * 2 + 1,
+                        twinkle: Math.random() * 0.1
+                    });
+                }
+            }
+            
+            for (let star of window.stars) {
+                const twinkle = 0.5 + Math.sin(Date.now() * star.twinkle) * 0.5;
+                ctx.globalAlpha = twinkle * (1 - Math.min(1, backgroundCycleValue * 5 - 4));
+                ctx.beginPath();
+                ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+            
+            ctx.restore();
+        }
+        
+        function drawCelestialBody() {
+            ctx.save();
+            
+            if (isDay) {
+                const sunProgress = (backgroundCycleValue % 0.6) / 0.6;
+                const sunX = canvas.width * sunProgress;
+                const sunY = canvas.height * 0.2 + Math.sin(Math.PI * sunProgress) * (canvas.height * 0.4);
+                
+                const gradient = ctx.createRadialGradient(
+                    sunX, sunY, 20, sunX, sunY, 80
+                );
+                gradient.addColorStop(0, 'rgba(255, 255, 100, 0.8)');
+                gradient.addColorStop(1, 'rgba(255, 200, 50, 0)');
+                
+                ctx.fillStyle = gradient;
+                ctx.beginPath();
+                ctx.arc(sunX, sunY, 80, 0, Math.PI * 2);
+                ctx.fill();
+                
+                ctx.fillStyle = 'rgba(255, 255, 100, 1)';
+                ctx.beginPath();
+                ctx.arc(sunX, sunY, 30, 0, Math.PI * 2);
+                ctx.fill();
+            } else {
+                const moonProgress = ((backgroundCycleValue - 0.6) % 0.4) / 0.4;
+                const moonX = canvas.width * moonProgress;
+                const moonY = canvas.height * 0.2 + Math.sin(Math.PI * moonProgress) * (canvas.height * 0.2);
+                
+                const gradient = ctx.createRadialGradient(
+                    moonX, moonY, 15, moonX, moonY, 50
+                );
+                gradient.addColorStop(0, 'rgba(220, 220, 255, 0.6)');
+                gradient.addColorStop(1, 'rgba(200, 200, 255, 0)');
+                
+                ctx.fillStyle = gradient;
+                ctx.beginPath();
+                ctx.arc(moonX, moonY, 50, 0, Math.PI * 2);
+                ctx.fill();
+                
+                ctx.fillStyle = 'rgba(220, 220, 255, 1)';
+                ctx.beginPath();
+                ctx.arc(moonX, moonY, 20, 0, Math.PI * 2);
+                ctx.fill();
+                
+                ctx.fillStyle = 'rgba(200, 200, 230, 1)';
+                ctx.beginPath();
+                ctx.arc(moonX - 5, moonY - 7, 5, 0, Math.PI * 2);
+                ctx.fill();
+            }
+            
+            ctx.restore();
+        }
+
+        function gameLoop() {
+            if (!gamePlaying) return;
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            drawParallaxBackground();
+            updateDayNightBackground();
+            drawBird();
+            drawObstacles();
+            updateBird();
+            updateObstacles();
+            if (checkCollision()) {
+                endGame();
+                return;
+            }
+            updateScore();
+            if (dayCompleted) {
+                dayCounter++;
+                dayDisplay.textContent = `Day: ${dayCounter}`;
+                dayCompleted = false;
+            }
+
+            animationId = requestAnimationFrame(gameLoop);
+        }
+
+        function startGame() {
+            initGame();
+            gamePlaying = true;
+            startButton.style.display = 'none';
+            restartButton.style.display = 'block';
+            messageElement.style.display = 'none';
+            startObstacleGeneration();
+            gameLoop();
+        }
+
+        function endGame() {
+            gamePlaying = false;
+            cancelAnimationFrame(animationId);
+            clearInterval(obstacleGenerationInterval);
+            
+            if (!isDemo) {
+                finalCoinsDisplay.textContent = sessionCoins;
+                
+                const totalCoinsElement = document.getElementById('totalCoins');
+                totalCoinsElement.textContent = coins;
+                
+                gameStats.totalDeaths++;
+                gameStats.totalCoins += coins; 
+                gameStats.persistentCoins = coins; 
+                gameStats.totalDays += dayCounter - 1;
+                gameStats.obstaclesPassed += score;
+                
+                const sessionTime = Math.floor((Date.now() - gameStartTime) / 1000);
+                gameStats.timePlayed += sessionTime;
+                
+                if (score > gameStats.bestScore) {
+                    gameStats.bestScore = score;
+                }
+                
+                saveGameStats();
+                updateStatsDisplay(); 
+                
+                bestScoreDisplay.textContent = gameStats.bestScore;
+                
+                if (coins >= 1000) {
+                    reviveButton.disabled = false;
+                    reviveButton.innerHTML = `
+                        <img src="https://cdn.pixabay.com/photo/2016/11/30/21/55/coin-1873955_1280.png" alt="Coin">
+                        <span>Revive for 1000</span>
+                    `;
+                } else {
+                    reviveButton.disabled = true;
+                    reviveButton.innerHTML = `
+                        <img src="https://cdn.pixabay.com/photo/2016/11/30/21/55/coin-1873955_1280.png" alt="Coin">
+                        <span>Need 1000 (You have ${coins})</span>
+                    `;
+                }
+            }
+            
+            loseSound.currentTime = 0;
+            loseSound.play();
+            finalScoreDisplay.textContent = score;
+            gameOverOverlay.style.display = 'flex';
+            restartButton.style.display = 'none';
+            messageElement.style.display = 'none';
+        }
+
+        function handleFlap() {
+            if (gamePlaying) {
+                birdSpeedY = -12;
+                flapSound.currentTime = 0;
+                flapSound.play();
+            } else {
+                startGame();
+            }
+        }
+
+        function generateObstacles() {
+            const shape = Math.floor(Math.random() * 4);
+            
+            const yPosition = Math.random() * (canvas.height - obstacleSize * 2) + obstacleSize;
+
+            obstacles.push({
+                x: canvas.width,
+                y: yPosition,
+                passed: false,
+                shape: shape,
+                hasCoin: Math.random() > 0.3 
+            });
+        }
+
+        function startObstacleGeneration() {
+            obstacleGenerationInterval = setInterval(generateObstacles, 2000);
+        }
+
+        shopButton.addEventListener('click', () => {
+            updateShopCoinBalance();
+            shopPanel.classList.toggle('open');
+        });
+        
+        closeShopButton.addEventListener('click', () => {
+            shopPanel.classList.remove('open');
+        });
+        
+        shopItems.forEach(item => {
+            item.addEventListener('click', () => {
+                const boostType = item.getAttribute('data-boost');
+                const price = boostPrices[boostType];
+                
+                if (gameStats.purchasedBoosts.includes(boostType)) {
+                    if (!activeBoosts[boostType]) {
+                        activeBoosts[boostType] = true;
+                        item.classList.add('selected');
+                        applyBoost(boostType);
+                    }
+                    return;
+                }
+
+                if (coins >= price) {
+                    coins -= price;
+                    coinCountSpan.textContent = coins;
+                    
+                    gameStats.purchasedBoosts.push(boostType);
+                    
+                    updateShopItemDisplay(item);
+                    
+                    gameStats.persistentCoins = coins;
+                    saveGameStats();
+                    
+                    activeBoosts[boostType] = true;
+                    item.classList.add('selected');
+                    applyBoost(boostType);
+                    
+                    coinSound.currentTime = 0;
+                    coinSound.play();
+                } else {
+                    item.classList.add('shake');
+                    setTimeout(() => item.classList.remove('shake'), 500);
+                }
+            });
+        });
+        
+        backgroundItems.forEach(item => {
+            item.addEventListener('click', () => {
+                const bgType = item.getAttribute('data-bg');
+                
+                if (bgType === 'default' || gameStats.unlockedBackgrounds.includes(bgType)) {
+                    currentBackground = bgType;
+                    backgroundImage.src = backgroundImages[bgType];
+                    
+                    backgroundItems.forEach(bg => bg.classList.remove('selected'));
+                    item.classList.add('selected');
+                    return;
+                }
+                
+                const price = backgroundPrices[bgType];
+                
+                if (coins >= price) {
+                    coins -= price;
+                    coinCountSpan.textContent = coins;
+                    
+                    gameStats.unlockedBackgrounds.push(bgType);
+                    
+                    updateBackgroundItemDisplay(item);
+                    
+                    currentBackground = bgType;
+                    backgroundImage.src = backgroundImages[bgType];
+                    
+                    backgroundItems.forEach(bg => bg.classList.remove('selected'));
+                    item.classList.add('selected');
+                    
+                    gameStats.persistentCoins = coins;
+                    saveGameStats();
+                    
+                    coinSound.currentTime = 0;
+                    coinSound.play();
+                } else {
+                    item.classList.add('shake');
+                    setTimeout(() => item.classList.remove('shake'), 500);
+                }
+            });
+        });
+        
+        function applyBoost(boostType) {
+            switch(boostType) {
+                case 'shield':
+                    setTimeout(() => {
+                        activeBoosts.shield = false;
+                        const shieldItem = document.querySelector('[data-boost="shield"]');
+                        shieldItem.classList.remove('selected');
+                    }, 20000);
+                    break;
+                    
+                case 'magnet':
+                    setTimeout(() => {
+                        activeBoosts.magnet = false;
+                        const magnetItem = document.querySelector('[data-boost="magnet"]');
+                        magnetItem.classList.remove('selected');
+                    }, 15000);
+                    break;
+                    
+                case 'slow':
+                    const originalSpeed = gameSpeed;
+                    gameSpeed = gameSpeed / 2;
+                    setTimeout(() => {
+                        gameSpeed = originalSpeed;
+                        activeBoosts.slow = false;
+                        const slowItem = document.querySelector('[data-boost="slow"]');
+                        slowItem.classList.remove('selected');
+                    }, 10000);
+                    break;
+                    
+                case 'double':
+                    setTimeout(() => {
+                        activeBoosts.double = false;
+                        const doubleItem = document.querySelector('[data-boost="double"]');
+                        doubleItem.classList.remove('selected');
+                    }, 30000);
+                    break;
+                    
+                case 'shrink':
+                    const originalRadius = birdRadius;
+                    birdRadius = birdRadius * 0.6; 
+                    
+                    setTimeout(() => {
+                        birdRadius = originalRadius;
+                        activeBoosts.shrink = false;
+                        const shrinkItem = document.querySelector('[data-boost="shrink"]');
+                        shrinkItem.classList.remove('selected');
+                    }, 20000);
+                    break;
+            }
+        }
+
+        startButton.addEventListener('click', startGame);
+        restartButton.addEventListener('click', startGame);
+        restartButtonOverlay.addEventListener('click', startGame);
+        canvas.addEventListener('click', handleFlap);
+        document.addEventListener('keydown', (event) => {
+            if (event.key === ' ' || event.key === 'ArrowUp') {
+                handleFlap();
+            }
+        });
+
+        const titleScreen = document.querySelector('.title-screen');
+        const playButton = document.getElementById('playButton');
+        const shopTitleButton = document.getElementById('shopTitleButton');
+        const statsTitleButton = document.getElementById('statsTitleButton');
+        const statsButton = document.getElementById('statsButton');
+        const statsPanel = document.querySelector('.stats-panel');
+        const closeStatsButton = document.querySelector('.close-stats');
+        const bestScoreDisplay = document.getElementById('bestScore');
+        const statBestScore = document.getElementById('statBestScore');
+        const statTotalCoins = document.getElementById('statTotalCoins');
+        const statGamesPlayed = document.getElementById('statGamesPlayed');
+        const statTotalDeaths = document.getElementById('statTotalDeaths');
+        const statTotalDays = document.getElementById('statTotalDays');
+        const statObstaclesPassed = document.getElementById('statObstaclesPassed');
+        const statTimePlayed = document.getElementById('statTimePlayed');
+
+        let gameStats = {
+            bestScore: 0,
+            totalCoins: 0,
+            persistentCoins: 0, 
+            gamesPlayed: 0,
+            totalDeaths: 0,
+            totalDays: 0,
+            obstaclesPassed: 0,
+            timePlayed: 0, 
+            purchasedBoosts: [], 
+            unlockedBackgrounds: ['default'] 
+        };
+
+        let gameStartTime;
+        let isDemo = true;
+        let autoPilotInterval;
+
+        function loadGameStats() {
+            const savedStats = localStorage.getItem('burdGameStats');
+            if (savedStats) {
+                gameStats = JSON.parse(savedStats);
+            }
+            
+            if (!gameStats.purchasedBoosts) gameStats.purchasedBoosts = [];
+            if (!gameStats.unlockedBackgrounds) gameStats.unlockedBackgrounds = ['default'];
+            
+            coins = gameStats.persistentCoins || 0;
+            coinCountSpan.textContent = coins;
+            updateShopCoinBalance();
+            
+            updatePurchasedItemsDisplay();
+            
+            updateStatsDisplay();
+        }
+
+        function updatePurchasedItemsDisplay() {
+            shopItems.forEach(item => {
+                const boostType = item.getAttribute('data-boost');
+                if (gameStats.purchasedBoosts.includes(boostType)) {
+                    updateShopItemDisplay(item);
+                }
+            });
+            
+            backgroundItems.forEach(item => {
+                const bgType = item.getAttribute('data-bg');
+                if (gameStats.unlockedBackgrounds.includes(bgType)) {
+                    updateBackgroundItemDisplay(item);
+                }
+                
+                if (bgType === currentBackground) {
+                    item.classList.add('selected');
+                }
+            });
+        }
+
+        function saveGameStats() {
+            localStorage.setItem('burdGameStats', JSON.stringify(gameStats));
+        }
+
+        function updateStatsDisplay() {
+            statBestScore.textContent = gameStats.bestScore;
+            statTotalCoins.textContent = gameStats.totalCoins;
+            statGamesPlayed.textContent = gameStats.gamesPlayed;
+            statTotalDeaths.textContent = gameStats.totalDeaths;
+            statTotalDays.textContent = gameStats.totalDays;
+            statObstaclesPassed.textContent = gameStats.obstaclesPassed;
+            
+            const minutes = Math.floor(gameStats.timePlayed / 60);
+            const seconds = gameStats.timePlayed % 60;
+            statTimePlayed.textContent = `${minutes}m ${seconds}s`;
+        }
+
+        function initTitleScreen() {
+            titleScreen.style.display = 'flex';
+            
+            const copyrightElement = document.querySelector('.copyright');
+            copyrightElement.style.opacity = '1';
+            
+            startButton.style.display = 'none';
+            restartButton.style.display = 'none';
+            shopButton.style.display = 'none';
+            statsButton.style.display = 'none';
+            
+            startAutoPilot();
+        }
+
+        function startAutoPilot() {
+            isDemo = true;
+            initGame();
+            gamePlaying = true;
+            messageElement.style.display = 'none';
+            
+            startObstacleGeneration();
+            gameLoop();
+            
+            autoPilotInterval = setInterval(() => {
+
+                let nearestObstacle = null;
+                let secondObstacle = null;
+                
+                for (let i = 0; i < obstacles.length; i++) {
+                    if (obstacles[i].x + obstacleSize > birdX) {
+                        if (!nearestObstacle) {
+                            nearestObstacle = obstacles[i];
+                        } else if (!secondObstacle) {
+                            secondObstacle = obstacles[i];
+                            break;
+                        }
+                    }
+                }
+                
+                if (nearestObstacle) {
+                    const obstacleTop = nearestObstacle.y;
+                    const obstacleBottom = nearestObstacle.y + obstacleSize;
+                    const safeZoneCenter = obstacleTop - obstacleSize;
+                    
+                    const predictedPositionInFuture = birdY + birdSpeedY * 3;
+                    
+                    if (nearestObstacle.x - birdX < canvas.width / 3) {
+                        if (predictedPositionInFuture > safeZoneCenter) {
+                            if (birdSpeedY > -6) {
+                                birdSpeedY = -10;
+                            }
+                        } else if (predictedPositionInFuture < safeZoneCenter - obstacleSize * 1.5) {
+                        }
+                    } else if (secondObstacle && secondObstacle.x - birdX < canvas.width / 2) {
+                        const secondObstacleTop = secondObstacle.y;
+                        const secondSafeZoneCenter = secondObstacleTop - obstacleSize;
+                        
+                        if (Math.abs(birdY - secondSafeZoneCenter) > obstacleSize) {
+                            if (birdY > secondSafeZoneCenter && birdSpeedY > -5) {
+                                birdSpeedY = -9;
+                            }
+                        }
+                    } else if (birdY > canvas.height - 150) {
+                        birdSpeedY = -9;
+                    } else if (birdY < 100) {
+                    }
+                } else if (birdY > canvas.height / 2) {
+                    birdSpeedY = -8;
+                }
+                
+                if (birdY > canvas.height - 100 && birdSpeedY > 0) {
+                    birdSpeedY = -10;
+                }
+                
+                if (birdY < 50 && birdSpeedY < 0) {
+                }
+            }, 100);
+        }
+
+        function stopAutoPilot() {
+            isDemo = false;
+            clearInterval(autoPilotInterval);
+            cancelAnimationFrame(animationId);
+            clearInterval(obstacleGenerationInterval);
+        }
+
+        function startRealGame() {
+            stopAutoPilot();
+            titleScreen.style.display = 'none';
+            
+            const copyrightElement = document.querySelector('.copyright');
+            copyrightElement.style.opacity = '0';
+            
+            statsButton.style.display = 'block';
+            gameStats.gamesPlayed++;
+            
+        
+            coins = gameStats.persistentCoins || 0;
+            coinCountSpan.textContent = coins;
+            updateShopCoinBalance();
+            
+            saveGameStats();
+            
+            gameStartTime = Date.now();
+            initGame();
+            gamePlaying = true;
+            startButton.style.display = 'none';
+            restartButton.style.display = 'block';
+            messageElement.style.display = 'none';
+            startObstacleGeneration();
+            gameLoop();
+            
+            sessionCoins = 0;
+        }
+
+        playButton.addEventListener('click', startRealGame);
+
+        shopTitleButton.addEventListener('click', () => {
+            updateShopCoinBalance();
+            shopPanel.classList.add('open');
+        });
+
+        statsTitleButton.addEventListener('click', () => {
+            statsPanel.classList.toggle('open');
+        });
+
+        statsButton.addEventListener('click', () => {
+            statsPanel.classList.toggle('open');
+        });
+
+        closeStatsButton.addEventListener('click', () => {
+            statsPanel.classList.remove('open');
+        });
+
+        restartButtonOverlay.addEventListener('click', () => {
+            gameOverOverlay.style.display = 'none';
+            
+            coins = gameStats.persistentCoins || 0;
+            coinCountSpan.textContent = coins;
+            
+            startRealGame();
+        });
+
+        backgroundItems.forEach(item => {
+            const coinPrice = item.querySelector('.coin-price');
+            if (coinPrice) {
+                const price = parseInt(coinPrice.textContent);
+                backgroundPrices[item.getAttribute('data-bg')] = price;
+            }
+        });
+
+        window.addEventListener('load', () => {
+            loadGameStats();
+            initTitleScreen();
+        });
+
+        const reviveButton = document.getElementById('reviveButton');
+
+        reviveButton.addEventListener('click', () => {
+            if (coins >= 1000) {
+                coins -= 1000;
+                coinCountSpan.textContent = coins;
+                
+                gameStats.persistentCoins = coins;
+                saveGameStats();
+                
+                updateShopCoinBalance();
+                
+                gameOverOverlay.style.display = 'none';
+                
+                gamePlaying = true;
+                restartButton.style.display = 'block';
+                
+                activeBoosts.shield = true;
+                setTimeout(() => {
+                    activeBoosts.shield = false;
+                }, 5000);
+                
+                gameLoop();
+                obstacleGenerationInterval = setInterval(generateObstacles, 2000);
+            }
+        });
+
+        const mainMenuButton = document.getElementById('mainMenuButton');
+        const finalCoinsDisplay = document.getElementById('finalCoins');
+
+        mainMenuButton.addEventListener('click', () => {
+            gameOverOverlay.style.display = 'none';
+            
+            gameStats.persistentCoins = coins;
+            saveGameStats();
+            
+            initTitleScreen();
+        });
+
+        const shopCoinBalance = document.getElementById('shopCoinBalance');
+
+        function updateShopCoinBalance() {
+            shopCoinBalance.textContent = coins;
+        }
+
+        function updateShopItemDisplay(item) {
+            const priceElement = item.querySelector('.shop-item-price');
+            
+            if (priceElement) {
+                priceElement.innerHTML = '<span class="owned-text">OWNED</span>';
+            }
+            
+            item.classList.add('purchased');
+        }
+
+        function updateBackgroundItemDisplay(item) {
+            const priceElement = item.querySelector('.coin-price');
+            
+            if (priceElement) {
+                priceElement.innerHTML = 'OWNED';
+            }
+            
+            item.classList.add('unlocked');
+        }
+
+        initGame();
+    </script>
+</body>
+</html>
