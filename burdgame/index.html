@@ -236,16 +236,20 @@
             background-color: rgba(0, 0, 0, 0.85);
             color: white;
             padding: 20px;
-            transition: right 0.3s ease;
+            transition: right 0.3s ease, opacity 0.3s ease;
             z-index: 20;
             overflow-y: auto;
             font-family: 'Press Start 2P', cursive;
             border-left: 4px solid gold;
             backdrop-filter: blur(10px);
+            opacity: 0; 
+            pointer-events: none; 
         }
 
         .shop-panel.open {
             right: 0;
+            opacity: 1; 
+            pointer-events: auto; 
         }
 
         .shop-header {
@@ -268,6 +272,10 @@
             color: white;
             font-size: 1.5rem;
             cursor: pointer;
+            padding: 5px 10px;
+            margin-right: -10px; 
+            position: relative;
+            z-index: 30; 
         }
 
         .shop-section {
@@ -456,16 +464,20 @@
             background-color: rgba(0, 0, 0, 0.85);
             color: white;
             padding: 20px;
-            transition: left 0.3s ease;
+            transition: left 0.3s ease, opacity 0.3s ease;
             z-index: 20;
             overflow-y: auto;
             font-family: 'Press Start 2P', cursive;
             border-right: 4px solid gold;
             backdrop-filter: blur(10px);
+            opacity: 0; 
+            pointer-events: none; 
         }
 
         .stats-panel.open {
             left: 0;
+            opacity: 1;
+            pointer-events: auto;
         }
 
         .stats-header {
@@ -645,7 +657,7 @@
         .shop-coin-balance {
             position: absolute;
             top: 20px;
-            right: 20px;
+            right: 50px; 
             background-color: rgba(255, 215, 0, 0.8);
             padding: 8px 12px;
             border-radius: 20px;
@@ -672,7 +684,7 @@
             text-align: center;
             z-index: 5;
             text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
-            opacity: 0; /* Hide by default */
+            opacity: 0; 
             transition: opacity 0.5s ease;
         }
 
@@ -1028,7 +1040,7 @@
 
         function detectMobile() {
             return (
-                window.innerWidth <= 768 || // Common mobile width threshold
+                window.innerWidth <= 768 || 
                 /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
             );
         }
@@ -2002,7 +2014,7 @@
 
         shopTitleButton.addEventListener('click', () => {
             updateShopCoinBalance();
-            shopPanel.classList.add('open');
+            shopPanel.classList.toggle('open');
         });
 
         statsTitleButton.addEventListener('click', () => {
