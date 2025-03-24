@@ -1328,7 +1328,7 @@
             slow: 40,
             double: 60,
             shrink: 70,
-            luck: 800 // Add luck boost price
+            luck: 800 
         };
         
         let backgroundPrices = {
@@ -1586,11 +1586,9 @@
                 ctx.globalAlpha = 1 - coin.frame/10;
                 
                 if (coin.isMysteryBox) {
-                    // Draw mystery box with floating animation
                     const baseSize = isMobile ? obstacleSize/2 : obstacleSize/3;
-                    const floatY = coin.y - coin.frame*3; // Float upward
+                    const floatY = coin.y - coin.frame*3;
                     
-                    // Draw mystery box image
                     ctx.shadowColor = 'gold';
                     ctx.shadowBlur = 10;
                     ctx.drawImage(
