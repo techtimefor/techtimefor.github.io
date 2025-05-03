@@ -35,27 +35,6 @@
             color: white;
         }
 
-        @keyframes textAnimation {
-            0% {
-                opacity: 0;
-                transform: scale(0.9);
-            }
-            50% {
-                opacity: 1;
-                transform: scale(1.05);
-            }
-            100% {
-                opacity: 0;
-                transform: scale(0.9);
-            }
-        }
-
-        .animated-text {
-            font-size: 2.5rem;
-            text-align: center;
-            margin-top: 20px;
-            animation: textAnimation 3s ease-in-out infinite;
-        }
 
         .techtimefor-editions-section {
             padding: 20px;
@@ -111,6 +90,54 @@
             text-align: center;
             font-weight: bold;
         }
+
+        .new-builds {
+  text-align: center;
+  margin: 50px auto;
+  padding: 20px;
+  background: linear-gradient(180deg, #fff, #f0f0f0);
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.new-builds h2 {
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+
+.new-builds p {
+  font-size: 1.2rem;
+  margin-bottom: 20px;
+}
+
+.new-build-image {
+  max-width: 80%;
+  height: auto;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  animation: fadeIn 2s ease-in-out, float 5s infinite;
+}
+
+/* Cool effects */
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
     </style>
 </head>
 <body>
@@ -149,10 +176,14 @@
         </div>
     </nav>
 
-    <div class="animated-text">Meet a new AmogOS coming soon...</div>
+    <section class="new-builds">
+    <h2>Meet a new AmogOS coming soon...</h2>
+          <p>Stay tuned for exciting updates!</p>
+      <img src="../AmogOSInstaller.webp" alt="AmogOS Installer" class="new-build-image">
+</section>
+
 
     <section class="techtimefor-editions-section">
-        <!-- Warning section -->
         <div class="warning">
             ⚠️ Note: Newer builds of AmogOS will replace these editions in the near future. Stay tuned for updates!
         </div>
