@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#ff0000">
      <meta property="og:type" content="website">
@@ -11,7 +10,54 @@
   <meta property="og:image" content="https://media.discordapp.net/attachments/781960793142198272/1316902172612624394/image.png?ex=67db4c38&is=67d9fab8&hm=9b098331befca4a7ac4eac231a8f75693e169140e576ccbbbf5be2c87add4762&">
     <title>AmogOS - techtimefor</title>
     <link rel="stylesheet" href="../styles.css">
-    <link rel="stylesheet" href="./amogos-styles.css">
+    <style>
+        @keyframes gradient {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(270deg, purple, black);
+            background-size: 400% 400%;
+            animation: gradient 10s ease infinite;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        @keyframes textAnimation {
+            0% {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1.05);
+            }
+            100% {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+        }
+
+        .animated-text {
+            font-size: 2.5rem;
+            color: white;
+            text-align: center;
+            margin-top: auto;
+            margin-bottom: auto;
+            animation: textAnimation 3s ease-in-out infinite;
+        }
+    </style>
 </head>
 <body>
     <nav class="techtimefor-navbar">
@@ -49,96 +95,16 @@
         </div>
     </nav>
 
-    <header class="techtimefor-amogos-hero">
-        <div class="techtimefor-ambient-bg"></div>
-        <div class="techtimefor-hero-content">
-            <h1 class="techtimefor-fade-in">AmogOS</h1>
-            <p class="techtimefor-fade-in">Infect your PC with sussyness.</p>
-        </div>
-    </header>
-
-    <section class="techtimefor-slideshow-section">
-        <div class="techtimefor-slideshow-container techtimefor-fade-in">
-            <div id="slideshow">
-                <img src="https://media.discordapp.net/attachments/1123074177356791909/1322052317654290513/Notes_241227_040324_235.jpg?ex=67daeaeb&is=67d9996b&hm=d5082ed866b95d7e135536e5d8ac88ee16ac1c40496d37a41845fdb678bad6dc&=&format=webp&width=1266&height=800" class="techtimefor-slide">
-                <img src="https://media.discordapp.net/attachments/1123074177356791909/1322042516186595370/image.png?ex=67dae1ca&is=67d9904a&hm=a7e84c71732607a3ef7d44cd6de972f41168953c6672b560201e8e6d6ea12e64&=&format=webp&quality=lossless&width=688&height=365" class="techtimefor-slide hidden">
-            </div>
-        </div>
-    </section>
-
-    <section class="techtimefor-features-section">
-        <h2 class="techtimefor-section-title techtimefor-fade-in">Key Features</h2>
-        <div class="techtimefor-features-grid">
-            <div class="techtimefor-feature techtimefor-fade-in">
-                <h3>Updated Regularly</h3>
-                <p>More updated than AmogOS v1.95 ;D, with various editions to choose from.</p>
-            </div>
-            <div class="techtimefor-feature techtimefor-fade-in">
-                <h3>Stable & Reliable</h3>
-                <p>Use smoothly on any pc, regardless of hardware.</p>
-            </div>
-            <div class="techtimefor-feature techtimefor-fade-in">
-                <h3>Installable & Raspberry Pi Compatible</h3>
-                <p>Ability to use as an actual os and run it on almost all raspberry pi models.</p>
-            </div>
-            <div class="techtimefor-feature techtimefor-fade-in">
-                <h3>Minimal</h3>
-                <p>Comes with Ulauncher & Chromium.</p>
-            </div>
-        </div>
-    </section>
-
-    <section class="techtimefor-editions-section">
-        <h2 class="techtimefor-section-title techtimefor-fade-in">Available Editions</h2>
-        <div class="techtimefor-editions-container">
-            <div class="techtimefor-edition techtimefor-fade-in" style="--accent-color: var(--techtimefor-green);">
-                <h3>Manjaro Unstable Based</h3>
-                <p>A mix of fresh software with a touch of stability.</p>
-                <a href="https://github.com/techtimefor/amogos-manjaroarm/releases/tag/v1.96" class="techtimefor-edition-button">Download for Raspberry Pi</a>
-            </div>
-            <div class="techtimefor-edition techtimefor-fade-in" style="--accent-color: var(--techtimefor-blue);">
-                <h3>Xubuntu 24.04 LTS Based</h3>
-                <p>Up to date software with regular updates & long term ready.</p>
-                <a href="https://github.com/techtimefor/AmogOS-Xubuntu-/releases/tag/v1.95" class="techtimefor-edition-button">Download for x86_64</a>
-            </div>
-            <div class="techtimefor-edition techtimefor-fade-in" style="--accent-color: var(--techtimefor-red);">
-                <h3>Debian 12 Stable Based</h3>
-                <p>So stable that you don't need to worry about it falling apart!</p>
-                <a href="https://github.com/techtimefor/AmogOS-Debian/releases/tag/1.97" class="techtimefor-edition-button">Download for x86_64</a>
-            </div>
-        </div>
-    </section>
-
-    <section class="techtimefor-cta-section techtimefor-amogos-support">
-        <div class="techtimefor-cta-content techtimefor-fade-in">
-            <h2>Need OS Support?</h2>
-            <p>Join the Discord, im always available to help!</p>
-            <a href="https://discord.gg/6ut87Hqukr" class="techtimefor-cta-button primary">Join Discord</a>
-        </div>
-    </section>
-
-    <footer class="techtimefor-footer">
-        <div class="techtimefor-footer-content">
-            <p>© 2028 techtimefor | <a href="https://github.com/techtimefor">GitHub</a></p>
-        </div>
-    </footer>
+    <div class="animated-text">Meet a new AmogOS coming soon...</div>
 
     <script>
         const menuToggle = document.getElementById('menu-toggle');
         const mobileMenu = document.getElementById('mobile-menu');
-        const slides = document.querySelectorAll('.techtimefor-slide');
-        let currentSlide = 0;
 
         menuToggle.addEventListener('click', () => {
             mobileMenu.classList.toggle('hidden');
         });
 
-        setInterval(() => {
-            slides[currentSlide].classList.add('hidden');
-            currentSlide = (currentSlide + 1) % slides.length;
-            slides[currentSlide].classList.remove('hidden');
-        }, 3000);
-        
         window.addEventListener('resize', () => {
             if (window.innerWidth >= 768) { 
                 mobileMenu.classList.add('hidden');
